@@ -1,6 +1,6 @@
-# `scribe`: <small>a person who serves as a professional copyist, especially one who made copies of manuscripts before the invention of automatic printing.</small>
+# `scribe`
 
-**`scribe`** is a minimalist, heavily inspired by the `acmart`, opinionated $\LaTeX$ document class for academic and technical writing. It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, and technical reports. It is partially inspired by the `acmart` class.
+**`scribe`** is a minimalist, opinionated $\LaTeX$ document class for academic and technical writing. It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, and technical reports. It is partially inspired by the `acmart` class.
 
 [![Preview of the PDF](docs/main.png)](example/main.pdf)
 
@@ -80,7 +80,8 @@
 \bibliography{local}
 
 \end{document}
+```
 
 --- 
 
-> This repository follows the [standard-commit](https://github.com/standard-commits/standard-commits) message format. 
+This repository follows the [standard-commit](https://github.com/standard-commits/standard-commits) message format. 

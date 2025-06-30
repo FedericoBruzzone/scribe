@@ -83,6 +83,7 @@
 \RequirePackage{caption} % Caption package for customizing captions
 \RequirePackage{subcaption} % Subcaption package for subfigures
 \RequirePackage{pmboxdraw} % This enables graphical glyps, e.g., ├── └──
+\RequirePackage{multicol} % Multicol package for multiple columns in figures
 % Caption style
 \captionsetup{
 	font=sf, % 'sf' for sans-serif, 'rm' for serif
@@ -164,31 +165,27 @@
 % ========== Abstract and Index Terms ==========
 % ==============================================
 \renewenvironment{abstract}{
-	\par\medskip
-	\noindent\textbf{Abstract}---%\hspace{0.5em}
-	\itshape
-}{%
-	\par\medskip
+	\begin{center}
+		\begin{minipage}{0.93\linewidth}
+			\noindent\textbf{Abstract}---%\hspace{0.5em}
+			\itshape
+			}{%
+		\end{minipage}
+	\end{center}
 }
 
 \newenvironment{indexterms}{
-	\par\medskip
-	\noindent\textbf{Index Terms}---%\hspace{0.5em}
-	\itshape
-}{%
-	\par\medskip
+	\begin{center}
+		\begin{minipage}{0.93\linewidth}
+			\noindent\textbf{Index Terms}---%\hspace{0.5em}
+			\itshape
+			}{%
+		\end{minipage}
+	\end{center}
 }
 
-\@ifundefined{indexterms}{
-	% Add the divider line at the end of the abstract only if indexterms is not defined
-	\AtEndEnvironment{abstract}{%
-		\scribedivider
-	}
-}{%
-	% If indexterms is defined, add the divider line at the end of both abstract and indexterms
-	\AtEndEnvironment{indexterms}{%
-		\scribedivider
-	}
+\AtEndEnvironment{indexterms}{%
+	\scribedivider
 }
 
 % =====================================
@@ -227,4 +224,3 @@
 {\begin{center}}               % Look for this token in \maketitle
 {\vspace{-1.5cm}\begin{center}} % Insert negative vspace before the center environment
 {}{} % success and failure code, do nothing
-

@@ -22,6 +22,7 @@
 
 - **Minimalist Design**: Focuses on content with a clean, professional layout.
 - **Full support** for all standard `article` class options.
+- **Index Terms**: Use `\begin{indexterms}` to define keywords for indexing.
 - **Line Numbers**: Optional line numbering for easy reference and review.
 - **Citation style**:
     - Compact numeric citations (e.g., [1–3,5])

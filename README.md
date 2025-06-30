@@ -4,14 +4,19 @@
 
 <!-- [![One-column preview](docs/onecolumn.png)](example/onecolumn.pdf) -->
 <!-- [![Two-column preview](docs/twocolumns.png)](example/twocolumns.pdf) -->
+<!-- [![Two-column preview with abstract](docs/twocolumnabstract.png)](example/twocolumnabstract.pdf) -->
 
 <p align="center">
   <a href="example/onecolumn.pdf">
-    <img src="docs/onecolumn.png" alt="One-column preview" width="400"/>
+    <img src="docs/onecolumn.png" alt="One-column preview" width="250"/>
   </a>
   &nbsp;&nbsp;&nbsp;
-  <a href="example/twocolumns.pdf">
-    <img src="docs/twocolumns.png" alt="Two-column preview" width="400"/>
+  <a href="example/twocolumn.pdf">
+    <img src="docs/twocolumn.png" alt="Two-column preview" width="250"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example/twocolumnabstract.pdf">
+    <img src="docs/twocolumnabstract.png" alt="Two-column preview with abstract" width="250"/>
   </a>
 </p>
 
@@ -40,6 +45,9 @@
 
 ## Usage
 
+An example of a paper using the `scribe` class is provided in the `example` folder. 
+Below is a minimal setup to have a one-column abstract in a two-column layout, with line numbers.
+
 ### 1. Add `scribe.cls` to your project folder.
 
 ### 2. In your main `.tex` file:
@@ -48,7 +56,7 @@
 \documentclass[
     lineno, % Enable line numbers.
     letterpaper, % Use 'a4paper' for A4 size.
-    % twocolumn, % Uncomment for two-column layout.
+    twocolumn, % Uncomment for two-column layout.
 ]{scribe} 
 
 % Set right header mark (e.g., your name)
@@ -57,7 +65,6 @@
 % Define different aliases (along with colors) for comments
 \scribedefinecomment{fb}{orange}
 % \scribedefinecomment{yourcolleague}{red}
-% ...
 
 % Uncomment the following line to hide comments in the final document.
 % \scribeshowcommentsfalse 
@@ -76,18 +83,24 @@
 
 \begin{document}
 
-\maketitle
+\twocolumn[
+	\maketitle
 
-\begin{abstract}
-   % Abstract text goes here. This is a brief summary of the document's content, highlighting the main objectives, methods, and findings.
-\end{abstract}
+	\begin{abstract}
+        % Abstract text goes here. This is a brief summary of the document's content, highlighting the main objectives, methods, and findings.
+	\end{abstract}
+
+	\begin{indexterms}
+        % Index terms for indexing purposes. These are keywords that help categorize the document's content.
+	\end{indexterms}
+]
+
 
 % ==============================
 % ========== Sections ==========
 % ==============================
 \input{sects/introduction}
 \input{sects/background}
-% ...
 
 
 \bibliography{local}

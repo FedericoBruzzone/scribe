@@ -28,11 +28,10 @@
 	11pt,
 ]{article}
 
-
 % ==================================================
 % ========== Custom packages and settings ==========
 % ==================================================
-\RequirePackage[margin=2.5cm]{geometry} % Geometry is used to set the margins
+\RequirePackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry} % Geometry is used to set the margins
 \RequirePackage[numbers,sort&compress]{natbib} % Natbib for bibliography management
 \setlength{\bibsep}{2pt} % Adjust space between bibliography entries
 \RequirePackage[greek,english]{babel} % Language support. Greek is usually used for math and technical documents.
@@ -144,6 +143,54 @@
 	\renewcommand{\scriberightmark}{#1}%
 }
 
+% Define a command to set the divider line with a dingbat in the middle
+% Something like this:
+% ---------- ✧ ----------
+\newcommand{\scribedivider}{%
+	\par\medskip
+	\noindent
+	\makebox[\linewidth]{%
+		\hspace{2em}%
+		\makebox[0pt][l]{\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+		\hfill\ding{71}\hfill
+		\makebox[0pt][r]{\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+		\hspace{2em}%
+	}%
+	\par\medskip
+}
+
+
+% ==============================================
+% ========== Abstract and Index Terms ==========
+% ==============================================
+\renewenvironment{abstract}{
+	\par\medskip
+	\noindent\textbf{Abstract}---%\hspace{0.5em}
+	\itshape
+}{%
+	\par\medskip
+}
+
+\newenvironment{indexterms}{
+	\par\medskip
+	\noindent\textbf{Index Terms}---%\hspace{0.5em}
+	\itshape
+}{%
+	\par\medskip
+}
+
+\@ifundefined{indexterms}{
+	% Add the divider line at the end of the abstract only if indexterms is not defined
+	\AtEndEnvironment{abstract}{%
+		\scribedivider
+	}
+}{%
+	% If indexterms is defined, add the divider line at the end of both abstract and indexterms
+	\AtEndEnvironment{indexterms}{%
+		\scribedivider
+	}
+}
+
 % =====================================
 % ========== AtBeginDocument ==========
 % =====================================
@@ -167,3 +214,17 @@
 		\linenumbers
 	\fi
 }
+
+% =============================
+% ========== Patches ==========
+% =============================
+
+\RequirePackage{etoolbox} % For patching commands
+
+
+% Patch \maketitle to remove vertical space before the title (latexdef \@maketitle)
+\patchcmd{\@maketitle}
+{\begin{center}}               % Look for this token in \maketitle
+{\vspace{-1.5cm}\begin{center}} % Insert negative vspace before the center environment
+{}{} % success and failure code, do nothing
+

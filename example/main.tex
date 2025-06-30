@@ -1,7 +1,7 @@
 \documentclass[
     lineno, % Enable line numbers.
     letterpaper, % Use 'a4paper' for A4 size.
-    onecolumn, % [DEFAULT] Use 'twocolumn' for two-column layout.
+    twocolumn, % Uncomment for two-column layout.
 ]{scribe} 
 
 \usepackage{lipsum} % For generating dummy text
@@ -11,7 +11,7 @@
 
 % Define different aliases (along with colors) for comments
 \scribedefinecomment{fb}{orange}
-% \scribedefinecomment{yourcolleague}{red}
+\scribedefinecomment{jd}{blue}
 % ...
 
 % Uncomment the following line to hide comments in the final document.
@@ -34,8 +34,12 @@
 \maketitle
 
 \begin{abstract}
-    \textit{\lipsum[1]}
+	\lipsum[1]
 \end{abstract}
+
+\begin{indexterms}
+	foo, bar, baz, qux.
+\end{indexterms}
 
 % ==============================
 % ========== Sections ==========

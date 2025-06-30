@@ -2,7 +2,19 @@
 
 **`scribe`** is a minimalist, opinionated $\LaTeX$ document class for academic and technical writing. It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, and technical reports. It is partially inspired by the `acmart` class.
 
-[![Preview of the PDF](docs/main.png)](example/main.pdf)
+<!-- [![One-column preview](docs/onecolumn.png)](example/onecolumn.pdf) -->
+<!-- [![Two-column preview](docs/twocolumns.png)](example/twocolumns.pdf) -->
+
+<p align="center">
+  <a href="example/onecolumn.pdf">
+    <img src="docs/onecolumn.png" alt="One-column preview" width="400"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example/twocolumns.pdf">
+    <img src="docs/twocolumns.png" alt="Two-column preview" width="400"/>
+  </a>
+</p>
+
 
 ---
 

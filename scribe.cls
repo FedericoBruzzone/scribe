@@ -39,8 +39,8 @@
 % ===========================
 % ========== Fonts ==========
 % ===========================
-\RequirePackage[T1]{fontenc} % Font encoding. That is, how the text is encoded in the font. 
-\RequirePackage[utf8]{inputenc} % Input encoding. That is, how the text is encoded in the file. 
+\RequirePackage[T1]{fontenc} % Font encoding. That is, how the text is encoded in the font.
+\RequirePackage[utf8]{inputenc} % Input encoding. That is, how the text is encoded in the file.
 \RequirePackage{libertine} % Libertine font for text
 \RequirePackage[scaled=0.85]{beramono} % Bera Mono for monospace text
 
@@ -111,9 +111,9 @@
 % ===========================
 \RequirePackage{orcidlink}
 
-% ===================================== 
-% ========== Headers/footers ========== 
-% ===================================== 
+% =====================================
+% ========== Headers/footers ==========
+% =====================================
 \RequirePackage{fancyhdr} % Fancyhdr package for custom headers and footers
 \pagestyle{fancy} % Set the page style to fancy
 \fancyhf{} % Clear all header and footer fields
@@ -191,12 +191,12 @@
 % =====================================
 % ========== AtBeginDocument ==========
 % =====================================
-% Set up the document to use BibTeX 
+% Set up the document to use BibTeX
 \AtBeginDocument{%
 	\providecommand\BibTeX{{%
 				Bib\TeX}}}
 
-% Set the bibliography style to unsrt (unsorted). That is, the order of the references will be the order in which they are cited in the document. 
+% Set the bibliography style to unsrt (unsorted). That is, the order of the references will be the order in which they are cited in the document.
 % Alternatively, we can use:
 % 1. `plainnat` to use the plain style, which sorts the references alphabetically by author.
 % 2. `alpha` to use the alpha style, which uses the first letter of the author's name and the year of publication.
@@ -211,6 +211,11 @@
 		\linenumbers
 	\fi
 }
+
+% =============================
+% ========== Aliases ==========
+% =============================
+\newcommand{\tool}[1]{\textsc{#1}} % Command for tool names
 
 % =============================
 % ========== Patches ==========

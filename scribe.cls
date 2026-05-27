@@ -128,6 +128,51 @@
 \newcommand{\dinggreen}[1]{{\color{Green}\ding{#1}}}
 \newcommand{\dingblue}[1]{{\color{Blue}\ding{#1}}}
 
+% =================================
+% ========== Callout boxes ========
+% =================================
+% Colored callout boxes built on tcolorbox: a thick colored left rule, a light
+% grey bold title bar, white body. \scribedefinebox{<name>}{<color>} creates an
+% environment {<name>box}{<title>} and an inline box \<name>boxinline{<text>},
+% mirroring the \scribedefinecomment{<name>}{<color>} pattern.
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbset{
+	scribebox/.style={
+		arc=2mm,
+		boxrule=0mm,
+		leftrule=1mm,
+		colback=white,
+		colbacktitle=black!10!white,
+		coltitle=black,
+		fonttitle=\bfseries,
+		left=0.5mm, lefttitle=0.5mm,
+		right=0.5mm, righttitle=0.5mm,
+		top=0.2mm, bottom=0.2mm,
+		toptitle=0.3mm, bottomtitle=0.3mm,
+		title={#1},
+	},
+	scribeboxinline/.style={
+		on line,
+		arc=2mm,
+		boxrule=0pt,
+		leftrule=1mm,
+		fontupper=\bfseries,
+		boxsep=0pt,
+		left=1.5mm, right=1.5mm,
+		top=0.5mm, bottom=0.5mm,
+	},
+}
+\newcommand{\scribedefinebox}[2]{%
+	\newtcolorbox{#1box}[1]{breakable, colframe=#2, scribebox={##1}}%
+	\expandafter\newtcbox\csname #1boxinline\endcsname{colframe=#2, scribeboxinline}%
+}
+% Default palette (define your own with \scribedefinebox{<name>}{<color>}).
+\scribedefinebox{info}{MidnightBlue}
+\scribedefinebox{warn}{BrickRed}
+\scribedefinebox{tip}{ForestGreen}
+\scribedefinebox{note}{BurntOrange}
+
 % ===========================
 % ========== ORCID ==========
 % ===========================

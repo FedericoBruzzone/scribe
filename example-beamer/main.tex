@@ -71,20 +71,24 @@
 	The \verb|\scribedivider| ornament works on slides too.
 \end{frame}
 
-\begin{frame}{Blocks and dingbats}
+\begin{frame}{Callout boxes and dingbats}
 	\begin{columns}[T]
 		\begin{column}{0.5\textwidth}
-			\begin{block}{Definition}
-				A block with the accent-tinted body.
-			\end{block}
-			\begin{alertblock}{Warning}
-				An alert block for caveats.
-			\end{alertblock}
-			\begin{exampleblock}{Example}
-				An example block for, well, examples.
-			\end{exampleblock}
+			\begin{infobox}{Definition}
+				A clean callout with a colored left rule.
+			\end{infobox}
+			\begin{warnbox}{Warning}
+				A red box for caveats.
+			\end{warnbox}
+			\begin{tipbox}{Tip}
+				A green box for tips and examples.
+			\end{tipbox}
 		\end{column}
 		\begin{column}{0.5\textwidth}
+			Inline boxes: \infoboxinline{info}, \warnboxinline{warn},
+			\noteboxinline{note}.
+			\medskip
+
 			Colored dingbats, ported from \tool{scribe}:
 			\begin{itemize}
 				\item \dinggreen{52}~done

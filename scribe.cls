@@ -236,3 +236,12 @@
 {\begin{center}}               % Look for this token in \maketitle
 {\vspace{-1.5cm}\begin{center}} % Insert negative vspace before the center environment
 {}{} % success and failure code, do nothing
+
+% Do not line-number the title block (title, authors, date). \@maketitle runs
+% inside \maketitle's own group, so \nolinenumbers reverts automatically and the
+% abstract and body that follow are still numbered. In one column this makes the
+% numbering start at the abstract, like the two-column layout (where the title
+% block is boxed inside \twocolumn[...] and is never numbered anyway).
+\if@scribelineno
+	\pretocmd{\@maketitle}{\nolinenumbers}{}{}
+\fi

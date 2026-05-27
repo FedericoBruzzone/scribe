@@ -1,6 +1,6 @@
 # `scribe`
 
-**`scribe`** is a minimalist, opinionated $\LaTeX$ document class for academic technical writing and presentations. It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, technical reports, and presentations.
+**`scribe`** is a minimalist, opinionated $\LaTeX$ document class and beamer style for academic technical writing and presentations. It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, technical reports, and presentations.
 <!-- It is partially inspired by the `acmart` class. -->
 
 <!-- [![One-column preview](docs/onecolumn.png)](example/onecolumn.pdf) -->

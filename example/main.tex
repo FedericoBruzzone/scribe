@@ -1,8 +1,23 @@
-\documentclass[
-    lineno, % Enable line numbers.
-    letterpaper, % Use 'a4paper' for A4 size.
-    twocolumn, % Comment for single column layout.
-]{scribe} 
+% =====================================================================
+% Layout selector. By default this file builds the two-column layout
+% with a full-width abstract. The repo-root script ../regen-docs.sh
+% overrides it on the command line to render all three preview variants
+% from this single source, e.g.:
+%   pdflatex "\def\scribelayout{onecolumn}\input{main.tex}"
+% Accepted values:
+%   onecolumn          - single column
+%   twocolumn          - two columns, abstract in the first column
+%   twocolumnabstract  - two columns, abstract spanning the top (default)
+% =====================================================================
+\providecommand{\scribelayout}{twocolumnabstract}
+\def\scribeonecol{onecolumn}
+\def\scribetca{twocolumnabstract}
+
+\ifx\scribelayout\scribeonecol
+    \documentclass[lineno, letterpaper]{scribe}            % single column
+\else
+    \documentclass[lineno, letterpaper, twocolumn]{scribe} % two columns
+\fi
 
 \usepackage{lipsum} % For generating dummy text
 
@@ -22,7 +37,7 @@
 \lstset{style=scribe}
 
 % Set right header mark (e.g., your name)
-\scribesetrightmark{Federico Bruzzone} 
+\scribesetrightmark{Federico Bruzzone}
 
 % Define different aliases (along with colors) for comments
 \scribedefinecomment{fb}{orange}
@@ -30,7 +45,7 @@
 % ...
 
 % Uncomment the following line to hide comments in the final document.
-% \scribeshowcommentsfalse 
+% \scribeshowcommentsfalse
 
 \title{\textbf{An example paper using the scribe document class}}
 
@@ -39,26 +54,41 @@
     Computer Science Department \\
     Università degli Studi di Milano \\
     \href{mailto:federico.bruzzone@unimi.it}{\texttt{federico.bruzzone@unimi.it}} \\
-    \url{https://federicobruzzone.github.io/} 
+    \url{https://federicobruzzone.github.io/}
 }
 
 \date{September 2025}
 
-\begin{document}
-
-
-\twocolumn[
-	\maketitle
-
+% Front matter (abstract + index terms), placed differently per layout below.
+\newcommand{\scribefrontmatter}{%
 	\begin{abstract}
 		Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adi- piscing vitae, felis. Curabitur dictum gravida mau- ris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu ne- que. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mau- ris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasel- lus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
 	\end{abstract}
 
 	\begin{indexterms}
 		foo, bar, baz, qux.
-	\end{indexterms}
-]
+	\end{indexterms}%
+}
 
+\begin{document}
+
+\ifx\scribelayout\scribeonecol
+	% Single column: title and front matter flow in the galley.
+	\maketitle
+	\scribefrontmatter
+\else
+	\ifx\scribelayout\scribetca
+		% Two columns, abstract spanning the full width at the top.
+		\twocolumn[%
+			\maketitle
+			\scribefrontmatter
+		]
+	\else
+		% Two columns, title spanning, abstract in the first column.
+		\twocolumn[\maketitle]
+		\scribefrontmatter
+	\fi
+\fi
 
 % ==============================
 % ========== Sections ==========
@@ -68,4 +98,3 @@
 \bibliography{local}
 
 \end{document}
-

@@ -39,7 +39,7 @@
 - **Custom header mark**: `\scribesetrightmark{...}` sets right-side header text
 - **Typography**:
     - Serif: **Libertine**
-    - Monospace: **Bera Mono**
+    - Monospace: **Inconsolata** (default; comment it out and uncomment the `beramono` line in the class to use **Bera Mono** instead)
 - **Matching Beamer theme**: `beamerthemescribe` brings the same style to slides (see [below](#beamer-theme)).
 
 ---
@@ -114,9 +114,11 @@ Below is a minimal setup to have a one-column abstract in a two-column layout, w
 ## Beamer theme
 
 **`beamerthemescribe`** brings the `scribe` identity to slides: the same Libertine
-serif and Bera Mono fonts, the `MidnightBlue` accent, the `\scribedivider`
+serif and Inconsolata monospace fonts, the `MidnightBlue` accent, the `\scribedivider`
 ornament, colored dingbats, and the toggleable named-comment system. A full
-example is in the `example-beamer` folder.
+example is in the `example-beamer` folder. As in the paper class, you can switch
+the monospace font back to Bera Mono by editing the `\RequirePackage` lines in
+`beamerthemescribe.sty`.
 
 <p align="center">
   <a href="example-beamer/main.pdf">

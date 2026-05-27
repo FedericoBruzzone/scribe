@@ -6,6 +6,21 @@
 
 \usepackage{lipsum} % For generating dummy text
 
+% Code listing style (uses the class accent, MidnightBlue, and Inconsolata mono)
+\lstdefinestyle{scribe}{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{MidnightBlue}\bfseries,
+    commentstyle=\color{black!55}\itshape,
+    stringstyle=\color{ForestGreen!70!black},
+    numberstyle=\tiny\color{black!45},
+    showstringspaces=false,
+    breaklines=true,
+    captionpos=b,
+    aboveskip=1em,
+    belowskip=0.5em,
+}
+\lstset{style=scribe}
+
 % Set right header mark (e.g., your name)
 \scribesetrightmark{Federico Bruzzone} 
 

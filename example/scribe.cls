@@ -42,7 +42,8 @@
 \RequirePackage[T1]{fontenc} % Font encoding. That is, how the text is encoded in the font.
 \RequirePackage[utf8]{inputenc} % Input encoding. That is, how the text is encoded in the file.
 \RequirePackage{libertine} % Libertine font for text
-\RequirePackage[scaled=0.85]{beramono} % Bera Mono for monospace text
+\RequirePackage{inconsolata} % Inconsolata for monospace text (default)
+% \RequirePackage[scaled=0.85]{beramono} % Bera Mono for monospace text (alternative)
 
 % ==================================
 % ========== Line numbers ==========

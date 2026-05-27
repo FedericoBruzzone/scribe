@@ -7,6 +7,13 @@
 		n \cdot fact(n-1) & \text{if } n > 0
 	\end{cases}
 \end{equation*}
+The same recursive factorial can be written in C as shown in Listing~\ref{lst:fact}.
+\begin{lstlisting}[language=C, caption={A recursive factorial in C, mirroring the definition above.}, label={lst:fact}]
+int fact(int n) {
+    if (n == 0) return 1;
+    return n * fact(n - 1);
+}
+\end{lstlisting}
 \fbcomment{This is a comment in orange from Federico Bruzzone.}
 \lipsum[1]
 \jdcomment{This is another comment in blue from Jhon Doe.}

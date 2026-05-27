@@ -40,6 +40,7 @@
 - **Typography**:
     - Serif: **Libertine**
     - Monospace: **Bera Mono**
+- **Matching Beamer theme**: `beamerthemescribe` brings the same style to slides (see [below](#beamer-theme)).
 
 ---
 
@@ -56,7 +57,7 @@ Below is a minimal setup to have a one-column abstract in a two-column layout, w
 \documentclass[
     lineno, % Enable line numbers.
     letterpaper, % Use 'a4paper' for A4 size.
-    twocolumn, % Uncomment for two-column layout.
+    twocolumn, % Comment for single column layout.
 ]{scribe} 
 
 % Set right header mark (e.g., your name)
@@ -108,6 +109,70 @@ Below is a minimal setup to have a one-column abstract in a two-column layout, w
 \end{document}
 ```
 
---- 
+---
 
-This repository follows the [standard-commit](https://github.com/standard-commits/standard-commits) message format. 
+## Beamer theme
+
+**`beamerthemescribe`** brings the `scribe` identity to slides: the same Libertine
+serif and Bera Mono fonts, the `MidnightBlue` accent, the `\scribedivider`
+ornament, colored dingbats, and the toggleable named-comment system. A full
+example is in the `example-beamer` folder.
+
+<p align="center">
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-title.png" alt="Beamer title slide" width="250"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-content.png" alt="Beamer content slide" width="250"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-blocks.png" alt="Beamer blocks slide" width="250"/>
+  </a>
+</p>
+
+### 1. Add `beamerthemescribe.sty` to your project folder.
+
+### 2. In your main `.tex` file:
+
+```latex
+\documentclass[
+    aspectratio=169, % 16:9 slides. Use 'aspectratio=43' for classic 4:3.
+]{beamer}
+
+\usetheme{scribe} % The scribe beamer theme
+% Theme options:
+%   \usetheme[noframenumbers]{scribe} % hide the frame counter in the footer
+%   \usetheme[nosectionpages]{scribe} % no automatic section divider slides
+
+\title{An example presentation\\ using the scribe beamer theme}
+\subtitle{Minimalist slides, matching the paper}
+\author[F. Bruzzone]{Federico Bruzzone \orcidlink{0000-0002-8701-8853}}
+\institute{Università degli Studi di Milano}
+\date{May 2026}
+
+% Define aliases (and colors) for comments, just like the paper class
+\scribedefinecomment{fb}{orange}
+% \scribeshowcommentsfalse % Uncomment to hide comments in the final slides
+
+\begin{document}
+
+\begin{frame}[plain,noframenumbering]
+    \titlepage
+\end{frame}
+
+\section{Introduction} % Triggers an automatic divider slide
+
+\begin{frame}{A clean first slide}
+    \begin{itemize}
+        \item Triangle bullets in the accent color
+    \end{itemize}
+    \scribedivider % The signature ✦ ornament works on slides too
+\end{frame}
+
+\end{document}
+```
+
+> **Note:** Frames that contain verbatim material (`\verb`, `lstlisting`, …)
+> must be declared `\begin{frame}[fragile]`, as required by `beamer`.

@@ -1,0 +1,264 @@
+%%----------------------------------------------------------------------
+%% beamerthemescribe.sty
+%% A beamer theme matching the `scribe` document class.
+%% author: Federico Bruzzone (27-05-2026) last update: (27-05-2026)
+%%----------------------------------------------------------------------
+%%
+%% Usage:
+%%   \documentclass[aspectratio=169]{beamer}
+%%   \usetheme{scribe}
+%%
+%% Mirrors scribe.cls: Libertine serif + Bera Mono, MidnightBlue accent,
+%% the \scribedivider ornament, colored dingbats, and the toggleable
+%% named-comment system.
+
+\def\filename{beamerthemescribe}
+\def\fileversion{v0.1.0 (author: Federico Bruzzone)}
+\def\filedate{2026/05/27}
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{\filename}[\filedate{} \fileversion]
+\typeout{Beamer theme \filename', \fileversion, <\filedate>}
+
+\mode<presentation>
+
+% =====================================
+% ========== Theme options ============
+% =====================================
+% [noframenumbers] hide the frame counter in the footer.
+% [nosectionpages] disable the automatic section divider slides.
+\newif\if@scribeframenumbers
+\@scribeframenumberstrue
+\newif\if@scribesectionpages
+\@scribesectionpagestrue
+
+\DeclareOptionBeamer{noframenumbers}{\@scribeframenumbersfalse}
+\DeclareOptionBeamer{nosectionpages}{\@scribesectionpagesfalse}
+\ProcessOptionsBeamer
+
+% ===========================
+% ========== Fonts ==========
+% ===========================
+\RequirePackage[T1]{fontenc}   % Font encoding
+\RequirePackage[utf8]{inputenc} % Input encoding
+\usefonttheme{serif}            % Use the roman font (Libertine), not beamer's sans
+\RequirePackage{libertine}      % Libertine font for text, matching scribe
+\RequirePackage[scaled=0.85]{beramono} % Bera Mono for monospace text
+\RequirePackage[greek,english]{babel}  % Language support (greek for math glyphs)
+
+% ============================
+% ========== Colors ==========
+% ============================
+\RequirePackage[dvipsnames]{xcolor} % dvipsnames gives MidnightBlue, etc.
+
+% scribe's signature accent is MidnightBlue (used for all links in the paper).
+\colorlet{scribeaccent}{MidnightBlue}
+\colorlet{scribemuted}{black!55}
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{structure}{fg=scribeaccent}          % itemize markers, toc, etc.
+\setbeamercolor{alerted text}{fg=Red}
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{subtitle}{fg=scribeaccent}
+\setbeamercolor{author}{fg=black}
+\setbeamercolor{institute}{fg=scribemuted}
+\setbeamercolor{date}{fg=scribemuted}
+\setbeamercolor{frametitle}{fg=black, bg=}
+\setbeamercolor{framesubtitle}{fg=scribeaccent}
+\setbeamercolor{footline}{fg=scribemuted}
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{section number projected}{fg=white, bg=scribeaccent}
+
+% Blocks: clean, minimal, accent-tinted.
+\setbeamercolor{block title}{fg=white, bg=scribeaccent}
+\setbeamercolor{block body}{fg=black, bg=scribeaccent!6}
+\setbeamercolor{block title alerted}{fg=white, bg=Red!85!black}
+\setbeamercolor{block body alerted}{fg=black, bg=Red!6}
+\setbeamercolor{block title example}{fg=white, bg=ForestGreen!85!black}
+\setbeamercolor{block body example}{fg=black, bg=ForestGreen!6}
+
+% =================================
+% ========== Font shapes ==========
+% =================================
+\setbeamerfont{title}{series=\bfseries, size=\LARGE}
+\setbeamerfont{subtitle}{series=\mdseries, size=\large, shape=\itshape}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{frametitle}{series=\bfseries, size=\Large}
+\setbeamerfont{framesubtitle}{shape=\itshape, size=\normalsize}
+\setbeamerfont{footline}{size=\scriptsize}
+\setbeamerfont{section in toc}{series=\bfseries}
+
+% =====================================
+% ========== Inner elements ===========
+% =====================================
+% Clean triangle markers in the accent color (reserve the ✦ star for dividers).
+\useinnertheme{default}
+\setbeamertemplate{itemize item}{\small\raise0.4pt\hbox{\color{scribeaccent}$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\color{scribeaccent}\textendash}
+\setbeamertemplate{itemize subsubitem}{\color{scribeaccent}\textperiodcentered}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{navigation symbols}{} % No navigation clutter, like scribe's clean look
+
+\setlength{\parskip}{0.5em}
+
+% Note: scribe.cls uses enumitem for compact lists, but beamer manages list
+% spacing and markers internally and conflicts with enumitem, so it is not
+% loaded here.
+
+% =====================================
+% ========== Caption style ============
+% =====================================
+% Match scribe: sans-serif caption text, bold "Figure N:" label.
+\setbeamertemplate{caption}{\raggedright\insertcaptionname~\insertcaptionnumber:~\insertcaption\par}
+\setbeamertemplate{caption label separator}{: }
+\setbeamerfont{caption}{family=\sffamily, size=\small}
+\setbeamerfont{caption name}{series=\bfseries}
+
+% =====================================
+% ========== Title page ===============
+% =====================================
+\setbeamertemplate{title page}{%
+	\centering
+	\vfill
+	{\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+	\ifx\insertsubtitle\@empty\else
+		\vskip0.4em
+		{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+	\fi
+	\scribedivider
+	{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+	\ifx\insertinstitute\@empty\else
+		\vskip0.3em
+		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
+	\fi
+	\ifx\insertdate\@empty\else
+		\vskip0.6em
+		{\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+	\fi
+	\vfill
+}
+
+% =====================================
+% ========== Frame title ==============
+% =====================================
+% Bold serif title with a thin accent rule beneath, echoing scribe's clean lines.
+\setbeamertemplate{frametitle}{%
+	\nointerlineskip
+	\vskip0.8em
+	{\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par}%
+	\ifx\insertframesubtitle\@empty\else
+		{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+	\fi
+	\nointerlineskip % Anchor the rule right below the title, not a full line down
+	\vskip0.2em
+	{\color{scribeaccent}\rule{\textwidth}{0.6pt}}%
+	\vskip0.2em
+}
+
+% =====================================
+% ========== Footline =================
+% =====================================
+% Minimal, ruleless footer (scribe sets \headrulewidth to 0pt):
+% short author on the left, short title + frame number on the right.
+\setbeamertemplate{footline}{%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.5\paperwidth, ht=2.5ex, dp=1.4ex, leftskip=2.2ex]{footline}%
+			\usebeamerfont{footline}\insertshortauthor%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.5\paperwidth, ht=2.5ex, dp=1.4ex, rightskip=2.2ex]{footline}%
+			\usebeamerfont{footline}\hfill\insertshorttitle
+			\if@scribeframenumbers
+				\quad\insertframenumber\,/\,\inserttotalframenumber%
+			\fi
+		\end{beamercolorbox}%
+	}%
+	\vskip2pt
+}
+
+% =====================================
+% ========== Section pages ============
+% =====================================
+% A divider slide before each section, built from the \scribedivider ornament.
+\setbeamertemplate{section page}{%
+	\centering
+	\vfill
+	{\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+		\bfseries\thesection.\quad\insertsectionhead\par}%
+	\scribedivider
+	\vfill
+}
+
+\if@scribesectionpages
+	\AtBeginSection[]{%
+		\begin{frame}[plain,noframenumbering]%
+			\sectionpage%
+		\end{frame}%
+	}
+\fi
+
+\mode<all>
+
+% ==============================
+% ========== Graphics ==========
+% ==============================
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}  % Better tables, like scribe
+\RequirePackage{array}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools}
+\RequirePackage{listings}  % Code formatting
+\RequirePackage{orcidlink} % \orcidlink for author affiliations
+
+% Colored dingbats (ported from scribe.cls)
+\RequirePackage{pifont}
+\newcommand{\dingred}[1]{{\color{Red}\ding{#1}}}
+\newcommand{\dinggreen}[1]{{\color{ForestGreen}\ding{#1}}}
+\newcommand{\dingblue}[1]{{\color{scribeaccent}\ding{#1}}}
+
+% =====================================
+% ========== scribe commands ==========
+% =====================================
+% Divider line with a ✦ dingbat in the middle (ported from scribe.cls):
+%   ---------- ✦ ----------
+\newcommand{\scribedivider}{%
+	\par\medskip
+	\noindent
+	\makebox[\linewidth]{%
+		\hspace{2em}%
+		\makebox[0pt][l]{\color{scribeaccent}\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+		\hfill{\color{scribeaccent}\ding{71}}\hfill
+		\makebox[0pt][r]{\color{scribeaccent}\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+		\hspace{2em}%
+	}%
+	\par\medskip
+}
+
+% Command for tool names (ported from scribe.cls)
+\newcommand{\tool}[1]{\textsc{#1}}
+
+% Toggle comments on/off (ported from scribe.cls)
+\newif\ifscribeshowcomments
+\scribeshowcommentstrue % or \scribeshowcommentsfalse to hide all comments
+
+% Core macro to define new named comment commands
+\newcommand{\scribedefinecomment}[2]{%
+	\expandafter\newcommand\csname #1comment\endcsname[1]{%
+		\ifscribeshowcomments%
+			\textcolor{#2}{[\textbf{#1}] \textit{##1}}%
+		\fi%
+	}%
+}
+
+% =====================================
+% ========== Links / hyperref =========
+% =====================================
+% beamer loads hyperref itself; match scribe's MidnightBlue link colors.
+\hypersetup{
+	colorlinks=true,
+	linkcolor=scribeaccent,
+	citecolor=scribeaccent,
+	urlcolor=scribeaccent
+}

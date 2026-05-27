@@ -1,0 +1,148 @@
+\documentclass[
+	aspectratio=169, % 16:9 slides. Use 'aspectratio=43' for classic 4:3.
+]{beamer}
+
+\usetheme{scribe} % The scribe beamer theme (matches scribe.cls)
+% Theme options:
+%   \usetheme[noframenumbers]{scribe} % hide the frame counter
+%   \usetheme[nosectionpages]{scribe} % no automatic section divider slides
+
+\usepackage{lipsum} % For generating dummy text
+
+% Define different aliases (along with colors) for comments
+\scribedefinecomment{fb}{orange}
+\scribedefinecomment{jd}{blue}
+
+% Uncomment the following line to hide comments in the final slides.
+% \scribeshowcommentsfalse
+
+\title{An example presentation\\ using the scribe beamer theme}
+\subtitle{Minimalist slides, matching the paper}
+
+\author{Federico Bruzzone \orcidlink{0000-0002-8701-8853}}
+\institute{%
+	Computer Science Department, Università degli Studi di Milano\\
+	\href{mailto:federico.bruzzone@unimi.it}{\texttt{federico.bruzzone@unimi.it}}
+}
+\date{May 2026}
+
+% Short versions used in the footline
+\title[scribe beamer]{An example presentation\\ using the scribe beamer theme}
+\author[F. Bruzzone]{Federico Bruzzone \orcidlink{0000-0002-8701-8853}}
+
+\begin{document}
+
+% ============================
+% ========== Title ===========
+% ============================
+\begin{frame}[plain,noframenumbering]
+	\titlepage
+\end{frame}
+
+% ============================
+% ========== Outline =========
+% ============================
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+% ============================
+% ========== Content =========
+% ============================
+\section{Introduction}
+
+\begin{frame}[fragile]{A clean first slide}
+	The \tool{scribe} beamer theme reuses the paper's identity: Libertine
+	serif, Bera Mono, and the \textcolor{scribeaccent}{MidnightBlue} accent.
+
+	\begin{itemize}
+		\item Minimalist, content-first layout~\cite{Scribe25}
+		\item A thin accent rule under every frame title
+		\item Triangle bullets in the accent color
+		      \begin{itemize}
+			      \item Second-level items inherit the style
+		      \end{itemize}
+	\end{itemize}
+
+	\fbcomment{This is a comment in orange from Federico Bruzzone.}
+
+	\scribedivider
+
+	The \verb|\scribedivider| ornament works on slides too.
+\end{frame}
+
+\begin{frame}{Blocks and dingbats}
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Definition}
+				A block with the accent-tinted body.
+			\end{block}
+			\begin{alertblock}{Warning}
+				An alert block for caveats.
+			\end{alertblock}
+			\begin{exampleblock}{Example}
+				An example block for, well, examples.
+			\end{exampleblock}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			Colored dingbats, ported from \tool{scribe}:
+			\begin{itemize}
+				\item \dinggreen{52}~done
+				\item \dingred{56}~failed
+				\item \dingblue{43}~note
+			\end{itemize}
+			\jdcomment{Another comment, in blue, from John Doe.}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Math and code}
+
+\begin{frame}{Mathematics}
+	The factorial, set with the Libertine math defaults:
+	\begin{equation*}
+		fact(n) = \begin{cases}
+			1                 & \text{if } n = 0 \\
+			n \cdot fact(n-1) & \text{if } n > 0
+		\end{cases}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]{Code listings}
+	Monospace is set in Bera Mono:
+\begin{lstlisting}[basicstyle=\ttfamily\small, keywordstyle=\color{scribeaccent}\bfseries, language=C]
+int fact(int n) {
+    if (n == 0) return 1;
+    return n * fact(n - 1);
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Wrap-up}
+
+\begin{frame}[fragile]{Summary}
+	\begin{itemize}
+		\item One theme file: \texttt{beamerthemescribe.sty}
+		\item Same fonts, colors, and ornament as \texttt{scribe.cls}
+		\item Toggle comments with \verb|\scribeshowcommentsfalse|
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[plain,noframenumbering]
+	\centering
+	\vfill
+	{\Large\bfseries Thank you!}
+	\scribedivider
+	\href{https://federicobruzzone.github.io/}{\texttt{federicobruzzone.github.io}}
+	\vfill
+\end{frame}
+
+% ============================
+% ========== Refs ============
+% ============================
+\begin{frame}[allowframebreaks]{References}
+	\bibliographystyle{unsrt}
+	\bibliography{local}
+\end{frame}
+
+\end{document}

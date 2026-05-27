@@ -49,10 +49,16 @@
 % ========== Line numbers ==========
 % ==================================
 \if@scribelineno % Conditional for line numbers
+	\RequirePackage[left]{lineno} % Running mode; numbers on the left by default
 	\if@twocolumn
-		\RequirePackage[switch]{lineno} % Symmetric line numbers for two columns
-	\else
-		\RequirePackage[left]{lineno}   % Line numbers on the left in one column
+		% Put each column's numbers in its OUTER margin (left column on the left,
+		% right column on the right). We deliberately avoid lineno's [switch]
+		% option: it relies on pagewise margin-switching that is unreliable in
+		% two-column mode (it leaves the right column's numbers in the gutter and
+		% triggers repeated "re-run to get it right" passes). Instead we pick the
+		% side from the current column via the kernel's \if@firstcolumn switch.
+		\renewcommand\makeLineNumber{%
+			\if@firstcolumn\makeLineNumberLeft\else\makeLineNumberRight\fi}
 	\fi
 	\renewcommand\linenumberfont{\normalfont\footnotesize\color{red}} % Style for line numbers
 \fi

@@ -63,6 +63,21 @@
 	\renewcommand\linenumberfont{\normalfont\footnotesize\color{red}} % Style for line numbers
 \fi
 
+% Helpers used by the front matter (guarded so they vanish when line numbers are
+% off). \scribenonum turns OFF galley numbering for the box that holds the
+% abstract/index terms (otherwise the minipage's line would get a stray number);
+% \scribeinternalnum numbers the lines INSIDE that box, continuing the count.
+% Together they make the abstract line-numbered per line in every layout,
+% including the full-width \twocolumn[...] banner (which lineno cannot number
+% from the outside), so numbering always starts at the abstract.
+\if@scribelineno
+	\newcommand{\scribenonum}{\nolinenumbers}
+	\newcommand{\scribeinternalnum}{\internallinenumbers}
+\else
+	\newcommand{\scribenonum}{}
+	\newcommand{\scribeinternalnum}{}
+\fi
+
 % ================================================
 % ========== Listings, math, and layout ==========
 % ================================================
@@ -173,7 +188,9 @@
 % ==============================================
 \renewenvironment{abstract}{
 	\begin{center}
+		\scribenonum
 		\begin{minipage}{0.93\linewidth}
+			\scribeinternalnum
 			\noindent\textbf{Abstract}---%\hspace{0.5em}
 			\itshape
 			}{%
@@ -183,7 +200,9 @@
 
 \newenvironment{indexterms}{
 	\begin{center}
+		\scribenonum
 		\begin{minipage}{0.93\linewidth}
+			\scribeinternalnum
 			\noindent\textbf{Index Terms}---%\hspace{0.5em}
 			\itshape
 			}{%

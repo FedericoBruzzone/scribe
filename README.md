@@ -22,8 +22,19 @@
   </a>
 </p>
 
-
----
+<p align="center">
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-title.png" alt="Beamer title slide" width="250"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-content.png" alt="Beamer content slide" width="250"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="example-beamer/main.pdf">
+    <img src="docs/beamer-blocks.png" alt="Beamer blocks slide" width="250"/>
+  </a>
+</p>
 
 ## Features
 
@@ -46,7 +57,7 @@
 
 ---
 
-## Usage
+## LaTeX class
 
 An example of a paper using the `scribe` class is provided in the `example` folder. 
 Below is a minimal setup to have a one-column abstract in a two-column layout, with line numbers.
@@ -111,8 +122,6 @@ Below is a minimal setup to have a one-column abstract in a two-column layout, w
 \end{document}
 ```
 
----
-
 ## Beamer theme
 
 **`beamerthemescribe`** brings the `scribe` identity to slides: the same Libertine
@@ -122,19 +131,6 @@ example is in the `example-beamer` folder. As in the paper class, you can switch
 the monospace font back to Bera Mono by editing the `\RequirePackage` lines in
 `beamerthemescribe.sty`.
 
-<p align="center">
-  <a href="example-beamer/main.pdf">
-    <img src="docs/beamer-title.png" alt="Beamer title slide" width="250"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="example-beamer/main.pdf">
-    <img src="docs/beamer-content.png" alt="Beamer content slide" width="250"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="example-beamer/main.pdf">
-    <img src="docs/beamer-blocks.png" alt="Beamer blocks slide" width="250"/>
-  </a>
-</p>
 
 ### 1. Add `beamerthemescribe.sty` to your project folder.
 

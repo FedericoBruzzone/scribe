@@ -59,7 +59,7 @@
 
 ## LaTeX class
 
-An example of a paper using the `scribe` class is provided in the `example` folder. 
+An example of a paper using the **`scribe`** class is provided in the `example` folder. 
 Below is a minimal setup to have a one-column abstract in a two-column layout, with line numbers.
 
 ### 1. Add `scribe.cls` to your project folder.

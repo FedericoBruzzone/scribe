@@ -21,6 +21,18 @@ int fact(int n) {
 
 \noindent Callout boxes come in a few colors out of the box: \infoboxinline{info}, \warnboxinline{warn}, \tipboxinline{tip}, and \noteboxinline{note}. Define your own with \texttt{\textbackslash scribedefinebox\{name\}\{color\}}.
 
+\noindent Theorem-like boxes are numbered automatically and can be referenced. Define your own with \texttt{\textbackslash scribedefinetheorem\{name\}\{Heading\}\{color\}}.
+
+\begin{definitionbox}[Factorial]\label{def:factorial}
+	The factorial of $n$ is $n! = \prod_{k=1}^{n} k$, with the base case $0! = 1$.
+\end{definitionbox}
+
+\begin{theorembox}\label{thm:recursive}
+	The factorial satisfies $n! = n \cdot (n-1)!$ for $n > 0$.
+\end{theorembox}
+
+\noindent Definition~\ref{def:factorial} and Theorem~\ref{thm:recursive} are numbered within the section and restart at every new section.
+
 \fbcomment{This is a comment in orange from Federico Bruzzone.}
 \lipsum[1]
 \jdcomment{This is another comment in blue from Jhon Doe.}

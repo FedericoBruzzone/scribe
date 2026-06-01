@@ -1,11 +1,11 @@
 %%----------------------------------------------------------------------
 %% scribe.cls
-%% author: Federico Bruzzone (30-06-2025) last update: (30-06-2025)
+%% author: Federico Bruzzone (30-06-2025) last update: (01-06-2026)
 %%----------------------------------------------------------------------
 
 \def\filename{scribe}
-\def\fileversion{v0.1.0 (author: Federico Bruzzone)}
-\def\filedate{2025/06/30}
+\def\fileversion{v0.2.0 (author: Federico Bruzzone)}
+\def\filedate{2026/06/01}
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{\filename}[\filedate{} \fileversion]
@@ -51,14 +51,26 @@
 \if@scribelineno % Conditional for line numbers
 	\RequirePackage[left]{lineno} % Running mode; numbers on the left by default
 	\if@twocolumn
-		% Put each column's numbers in its OUTER margin (left column on the left,
-		% right column on the right). We deliberately avoid lineno's [switch]
-		% option: it relies on pagewise margin-switching that is unreliable in
-		% two-column mode (it leaves the right column's numbers in the gutter and
-		% triggers repeated "re-run to get it right" passes). Instead we pick the
-		% side from the current column via the kernel's \if@firstcolumn switch.
+		% In two columns each column's numbers go in its OUTER margin (left column
+		% on the left, right column on the right). We do NOT pick the side from
+		% \if@firstcolumn: lineno attaches the number when a line is first
+		% contributed to a column, but the asynchronous page builder can later
+		% push that line -- or an indivisible object such as a callout box or a
+		% display -- to the OTHER column. The number then keeps the stale side and
+		% lands in the gutter, overlapping the text at the top of a new column or
+		% page. Instead we record the number's true horizontal position with
+		% zref-savepos (resolved at shipout, hence always correct) and choose the
+		% side from it on the next run. This needs the usual two-pass compile
+		% (already done by the Makefile and regen-docs.sh); on a lone first pass
+		% the positions are unknown and every number falls on the left.
+		\RequirePackage{zref-savepos}
 		\renewcommand\makeLineNumber{%
-			\if@firstcolumn\makeLineNumberLeft\else\makeLineNumberRight\fi}
+			\zsavepos{scribeLN\thelinenumber}%
+			\ifdim\zposx{scribeLN\thelinenumber}sp>0.5\paperwidth\relax
+				\makeLineNumberRight % past the page centre: right (second) column
+			\else
+				\makeLineNumberLeft  % first column, or the full-width banner
+			\fi}
 	\fi
 	\renewcommand\linenumberfont{\normalfont\footnotesize\color{red}} % Style for line numbers
 \fi
@@ -138,7 +150,7 @@
 \RequirePackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
 \tcbset{
-	scribebox/.style={
+	scribeboxbase/.style={
 		arc=2mm,
 		boxrule=0mm,
 		leftrule=1mm,
@@ -150,8 +162,8 @@
 		right=0.5mm, righttitle=0.5mm,
 		top=0.2mm, bottom=0.2mm,
 		toptitle=0.3mm, bottomtitle=0.3mm,
-		title={#1},
 	},
+	scribebox/.style={scribeboxbase, title={#1}},
 	scribeboxinline/.style={
 		on line,
 		arc=1.5mm,
@@ -172,6 +184,39 @@
 \scribedefinebox{warn}{BrickRed}
 \scribedefinebox{tip}{ForestGreen}
 \scribedefinebox{note}{BurntOrange}
+
+% =====================================================
+% ========== Theorem-like boxes (numbered) ============
+% =====================================================
+% Counter-based boxes for theorems, definitions, lemmas, ... They wear the same
+% look as the callout boxes above but carry an automatic number and support
+% \label/\ref. \scribedefinetheorem{<name>}{<Heading>}{<color>} creates an
+% environment used as
+%     \begin{<name>}[<optional note>] ... \end{<name>}
+% e.g. \begin{theorembox}[Pythagoras] ... \label{thm:pyth} ... \end{theorembox}
+% All theorem-like boxes share ONE counter that restarts each section, so their
+% numbers are unique within a section (Theorem 2.1, Definition 2.2, ...). Put a
+% \label inside the environment and reference it with \ref (write the kind by
+% hand, as is usual: "Theorem~\ref{thm:pyth}").
+\newcounter{scribethm}
+\counterwithin{scribethm}{section}
+\newcommand{\scribedefinetheorem}[3]{%
+	\newenvironment{#1}[1][]{%
+		\refstepcounter{scribethm}%
+		\begin{tcolorbox}[breakable, colframe=#3, scribeboxbase,
+			title={#2~\thescribethm\ifstrempty{##1}{}{ \textmd{(##1)}}}]%
+	}{%
+		\end{tcolorbox}%
+	}%
+}
+% Default set (define your own with \scribedefinetheorem{<name>}{<Heading>}{<color>}).
+\scribedefinetheorem{theorembox}{Theorem}{MidnightBlue}
+\scribedefinetheorem{lemmabox}{Lemma}{MidnightBlue}
+\scribedefinetheorem{corollarybox}{Corollary}{MidnightBlue}
+\scribedefinetheorem{propositionbox}{Proposition}{MidnightBlue}
+\scribedefinetheorem{definitionbox}{Definition}{ForestGreen}
+\scribedefinetheorem{examplebox}{Example}{BurntOrange}
+\scribedefinetheorem{remarkbox}{Remark}{BrickRed}
 
 % ===========================
 % ========== ORCID ==========

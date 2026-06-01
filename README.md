@@ -41,7 +41,9 @@
 - **Minimalist Design**: Focuses on content with a clean, professional layout.
 - **Full support** for all standard `article` class options.
 - **Index Terms**: Use `\begin{indexterms}` to define keywords for indexing.
-- **Line Numbers**: Optional line numbering for easy reference and review.
+- **Line Numbers**: Optional line numbering for easy reference and review, placed reliably in the outer margin of each column (even in two-column layouts and across page breaks).
+- **Callout boxes**: Colored boxes for asides — `info`, `warn`, `tip`, `note` out of the box, plus inline variants. Define your own with `\scribedefinebox{name}{color}`.
+- **Theorem-like boxes**: Numbered, referenceable environments for `theorembox`, `definitionbox`, `lemmabox`, `corollarybox`, `propositionbox`, `examplebox`, `remarkbox`. They share one counter that restarts each section and support `\label`/`\ref`. Define your own with `\scribedefinetheorem{name}{Heading}{color}`.
 - **Citation style**:
     - Compact numeric citations (e.g., [1–3,5])
     - Sorted in order of **first appearance**, not numerically
@@ -121,6 +123,32 @@ Below is a minimal setup to have a one-column abstract in a two-column layout, w
 
 \end{document}
 ```
+
+### Callout and theorem boxes
+
+```latex
+% Callout boxes (no number): info, warn, tip, note are predefined.
+\begin{infobox}{A title}
+    Some highlighted aside.
+\end{infobox}
+Inline flavors too: \infoboxinline{info}, \warnboxinline{warn}.
+% Define your own:
+\scribedefinebox{question}{Purple}
+
+% Theorem-like boxes (numbered, referenceable). theorembox, definitionbox,
+% lemmabox, corollarybox, propositionbox, examplebox, remarkbox are predefined.
+\begin{definitionbox}[Factorial] % optional note in brackets
+    \label{def:factorial}
+    The factorial of $n$ is $n! = \prod_{k=1}^{n} k$, with $0! = 1$.
+\end{definitionbox}
+As stated in Definition~\ref{def:factorial}, ...
+% Define your own:
+\scribedefinetheorem{conjecturebox}{Conjecture}{BrickRed}
+```
+
+All theorem-like boxes share one counter that restarts each section, so their
+numbers are unique within a section (e.g. Theorem 2.1, Definition 2.2). Write the
+kind by hand when referencing, as is customary: `Theorem~\ref{...}`.
 
 ## Beamer theme
 

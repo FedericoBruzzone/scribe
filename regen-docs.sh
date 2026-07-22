@@ -19,6 +19,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 EX="$ROOT/example"
 BEAMER="$ROOT/example-beamer"
+CV="$ROOT/example-cv"
 DOCS="$ROOT/docs"
 
 PDFLATEX="pdflatex -shell-escape -interaction=nonstopmode -file-line-error"
@@ -63,9 +64,10 @@ render() {
 # ---- sync class/theme -------------------------------------------------------
 # The example dirs keep their own copies; refresh them from the repo root so the
 # previews reflect the files you actually edit.
-echo ">> Syncing scribe.cls / beamerthemescribe.sty into example dirs"
+echo ">> Syncing scribe.cls / beamerthemescribe.sty / scribecv.cls into example dirs"
 cp "$ROOT/scribe.cls" "$EX/scribe.cls"
 cp "$ROOT/beamerthemescribe.sty" "$BEAMER/beamerthemescribe.sty"
+cp "$ROOT/scribecv.cls" "$CV/scribecv.cls"
 
 # ---- paper examples ---------------------------------------------------------
 echo ">> Building paper examples (example/)"
@@ -94,4 +96,14 @@ render main.pdf 4 "$DOCS/beamer-blocks.png"  '-bordercolor #dddddd -border 1'
 
 clean_aux main
 
-echo "Done. PDFs in example/ and example-beamer/, previews in docs/."
+# ---- CV example --------------------------------------------------------------
+echo ">> Building CV example (example-cv/)"
+cd "$CV"
+build main
+
+echo ">> Rendering CV preview -> docs/"
+render main.pdf 0 "$DOCS/cv-preview.png"
+
+clean_aux main
+
+echo "Done. PDFs in example/, example-beamer/, and example-cv/, previews in docs/."

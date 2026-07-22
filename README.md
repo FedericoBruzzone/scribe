@@ -1,6 +1,6 @@
 # `scribe`
 
-**`scribe`** is a minimalist, opinionated $\LaTeX$ document class and beamer style for academic technical writing and presentations. 
+**`scribe`** is a minimalist, opinionated $\LaTeX$ document class, beamer style, and CV class for academic technical writing, presentations, and resumes. 
 <!-- It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, technical reports, and presentations. -->
 <!-- It is partially inspired by the `acmart` class. -->
 
@@ -36,6 +36,12 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="example-cv/main.pdf">
+    <img src="docs/cv-preview.png" alt="CV preview" width="250"/>
+  </a>
+</p>
+
 ## Features
 
 - **Minimalist Design**: Focuses on content with a clean, professional layout.
@@ -56,6 +62,7 @@
     - Serif: **Libertine**
     - Monospace: **Inconsolata** (default; comment it out and uncomment the `beramono` line in the class to use **Bera Mono** instead)
 - **Matching Beamer theme**: `beamerthemescribe` brings the same style to slides (see [below](#beamer-theme)).
+- **Matching CV class**: `scribecv` brings the same style to CVs and resumes (see [below](#cv--resume)).
 
 ---
 
@@ -204,3 +211,80 @@ the monospace font back to Bera Mono by editing the `\RequirePackage` lines in
 
 > **Note:** Frames that contain verbatim material (`\verb`, `lstlisting`, …)
 > must be declared `\begin{frame}[fragile]`, as required by `beamer`.
+
+## CV / Resume
+
+**`scribecv`** brings the `scribe` identity to CVs and resumes: the same Libertine
+serif and Inconsolata monospace fonts, the `MidnightBlue` accent, the `\scribedivider`
+ornament, colored dingbats, callout boxes, and the toggleable named-comment system.
+A full example is in the `example-cv` folder.
+
+### Features
+
+- **Entry layout**: Date (bold, right-aligned) + content (left-aligned) with optional details line
+- **Section headings**: Small caps with horizontal rule, matching the Typst CV style
+- **Two-column info block**: Personal information on the left, contact info on the right
+- **Publication support**: Full citations from `.bib` via `bibentry` package (`\bibentry{key}`)
+- **Contact icons**: `fontawesome5` icons for GitHub, LinkedIn, Telegram, Twitter, Reddit, etc.
+- **Section heading styles**: Default centered (`---- ✧ ---- NAME ---- ✧ ----`) or fill-style (`NAME ---- ✧ ----` filling to the right margin). Enable fill-style with `\documentclass[sectionfill]{scribecv}`.
+- **Optional header**: Show your name in the top-right corner of each page with `\documentclass[header]{scribecv}`.
+- **Matching identity**: Same Libertine, MidnightBlue, `\scribedivider` as the paper class
+
+### 1. Add `scribecv.cls` to your project folder.
+
+### 2. In your main `.tex` file:
+
+```latex
+\documentclass{scribecv}
+% Or with options:
+% \documentclass[sectionfill,header]{scribecv}
+%
+% Options:
+%   sectionfill - fill-style section headings (NAME ---- ✧ ----)
+%   header      - show your name in the top-right header on each page
+
+\scribesetrightmark{Your Name}
+
+% Bibliography
+\bibliographystyle{unsrt}
+\scribenobibliography{cv.bib}  % loads .bbl data for inline citations
+
+\begin{document}
+
+\scribename{Your Name}
+\scribesubtitle{Curriculum Vitae}
+
+\scribeinfo{%
+    Born in City, Country \\
+    E-mail: \href{mailto:you@example.com}{you@example.com}%
+}{%
+    \faGithub\ \href{https://github.com/you}{github.com/you} \\
+    \faTelegram\ \href{https://t.me/you}{@you} \\
+    \faLinkedin\ \href{https://linkedin.com/in/you}{in/you} \\
+    \faTwitter\ \href{https://x.com/you}{@you}%
+}
+
+\maketitle
+
+\scribesection{Education}
+\scribeentry{2020--2024}{PhD in Computer Science at University of X}{}
+\scribeentry{2018--2020}{MSc in Computer Science at University of X}{Thesis: \textit{...}}
+
+\scribesection{Publications}
+
+% Journal paper format:
+\noindent{\small\textit{Journal Name} --- \bibentry{author2024} ---~%
+\href{url}{bib} \enspace \href{url}{pdf} \enspace \href{url}{DOI}}\par
+
+\vspace{4pt}
+
+% Preprint format:
+\noindent{\small\bibentry{author2023} ---~%
+\href{url}{arXiv}}\par
+
+\scribesection{Experience}
+\scribeentry{2024--Present}{Software Engineer at Company X}{Working on Y}
+
+\scribefooter{City}
+\end{document}
+```

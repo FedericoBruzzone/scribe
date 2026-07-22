@@ -1,0 +1,131 @@
+\documentclass{scribecv}
+
+% Set right header mark
+\scribesetrightmark{Your Name}
+
+% Define comment aliases
+\scribedefinecomment{me}{orange}
+
+% Uncomment to hide comments in the final document
+% \scribeshowcommentsfalse
+
+% Bibliography
+\bibliographystyle{unsrt}
+\scribenobibliography{cv.bib}
+
+\begin{document}
+
+% === Title and info ===
+\scribename{Your Name}
+\scribesubtitle{Curriculum Vitae}
+
+\scribeinfo{%
+	Born in City, Country on DD Month YYYY \\
+	Resident of City, Postal Code \\
+	E-mail: \href{mailto:you@example.com}{you@example.com} \\
+	E-mail: \href{mailto:you.alt@example.com}{you.alt@example.com} \\
+	Phone: +00 000 0000000%
+}{%
+	\faGithub\ \href{https://github.com/yourusername}{github.com/yourusername} \\
+	\faTelegram\ \href{https://t.me/yourusername}{@yourusername} \\
+	\faLinkedin\ \href{https://www.linkedin.com/in/yourprofile/}{in/yourprofile} \\
+	\faTwitter\ \href{https://x.com/yourusername}{@yourusername} \\
+	\faReddit\ \href{https://www.reddit.com/user/YourUsername}{u/YourUsername}%
+}
+
+\maketitle
+
+% === About ===
+\begin{center}
+\begin{minipage}{0.7\textwidth}
+\centering
+Write a brief description about yourself, your research interests, and your current position.
+For more information, visit your personal \href{https://yoursite.com}{\textbf{webpage}}.
+\end{minipage}
+\end{center}
+
+\vspace{4pt}
+
+% ====================================
+% ======== Publications ==============
+% ====================================
+\scribesection{Scientific Publications}
+
+\noindent{\small\textit{Journal Ranked Q1 on Scimago} --- \bibentry{Smith2024} ---~%
+\href{https://example.com/bib}{bib} \enspace
+\href{https://example.com/pdf}{pdf} \enspace
+\href{https://doi.org/10.1000/example}{DOI}}\par
+
+\vspace{4pt}
+
+\noindent{\small\textit{Journal Ranked Q2 on Scimago} --- \bibentry{Jones2023} ---~%
+\href{https://example.com/bib}{bib} \enspace
+\href{https://example.com/pdf}{pdf} \enspace
+\href{https://doi.org/10.1000/example2}{DOI}}\par
+
+\vspace{8pt}
+
+{\large\scshape Preprints\par}
+\vspace{6pt}
+
+\noindent{\small\bibentry{Doe2024} ---~%
+\href{https://arxiv.org/pdf/2401.00000}{arXiv}}\par
+
+\vspace{4pt}
+
+\noindent{\small\bibentry{Brown2023} ---~%
+\href{https://arxiv.org/pdf/2301.00000}{arXiv}}\par
+
+% ====================================
+% ======== Education =================
+% ====================================
+\scribesection{Education}
+
+\scribeentry{2024--Present}{PhD in Computer Science at University Name}{Thesis: \textit{Your Thesis Title Here}}
+
+\scribeentry{2022--2024}{MSc in Computer Science at University Name (\textit{110/110 cum laude}, Supervisor, Date)}{Thesis: \textit{Your Thesis Title Here}}
+
+\scribeentry{2019--2022}{BSc in Computer Science at University Name (Grade)}{}
+
+\scribeentry{2014--2019}{High School Diploma at School Name}{}
+
+% ====================================
+% ======== Work Experience ===========
+% ====================================
+\scribesection{Work Experience}
+
+\scribeentry{2024--Present}{Research Assistant at Lab Name, University}{Working on project description}
+
+\scribeentry{2022--2024}{Teaching Assistant at University}{Course name and responsibilities}
+
+\scribeentry{2021--2022}{Intern at Company Name}{Description of internship work}
+
+% ====================================
+% ======== Skills ====================
+% ====================================
+\scribesection{Technical Skills}
+
+\scribeentry{Languages}{Rust, C/C++, Python, Go, Java, TypeScript, SQL}{}
+
+\scribeentry{Tools \& Frameworks}{Git, Docker, Kubernetes, AWS, LaTeX, Linux}{}
+
+\scribeentry{Area of Expertise}{Your research areas, technical specializations}{}
+
+% ====================================
+% ======== Languages =================
+% ====================================
+\scribesection{Languages}
+
+\scribeentry{Italian}{Mother tongue}{}
+
+\scribeentry{English}{Level CEFR C1 (Advanced)}{}
+
+\scribeentry{French}{Level CEFR B1 (Intermediate)}{}
+
+% === Footer ===
+\vfill
+\begin{center}
+City, \today
+\end{center}
+
+\end{document}

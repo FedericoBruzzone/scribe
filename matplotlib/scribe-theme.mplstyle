@@ -1,0 +1,71 @@
+# scribe-theme.mplstyle -- scribe's matplotlib style for academic-paper figures.
+#
+# Portable on purpose: this file has no dependency on this project -- it's
+# scribe's own theme (~/dev/scribe), kept in sync by hand across every paper
+# that uses it. Drop it into any repo's figure-generation scripts and call
+#   plt.style.use("/path/to/scribe-theme.mplstyle")
+# for the same look -- serif typography matching a LaTeX document (no
+# usetex/pgf dependency, just font substitution), recessive axes (only the
+# baseline spine, hairline gridlines on the value axis only), a pure-white
+# surface matching the page it's printed on, and text-selectable embedded
+# PDF fonts.
+#
+# Colors are RGB tuples (0-1), not #hex: matplotlibrc-format files treat "#"
+# as a start-of-comment character, so a hex color like "#c3c2b7" silently
+# parses as an empty value followed by a comment. Hex equivalents are noted
+# in comments for reference.
+#
+# What this file does NOT cover (stays in code, per chart): per-axis grid
+# selection (y-only vs x-only -- not expressible as a static rcParam), and
+# any semantic/role-based color assignment (e.g. "this series is always
+# blue because it's the proposed approach") -- that belongs in a small
+# palette module next to your figure scripts, not in a style sheet, so that
+# color keeps following the entity rather than becoming a generic rotating
+# cycle. See this project's scribe_mpl.py (generic palette/mechanics) and
+# plotstyle.py (this project's role assignments + I/O) for that split.
+#
+# To make this style available by name (plt.style.use("scribe-theme")) from
+# ANY project on this machine, not just this repo, copy or symlink it into
+# matplotlib's user stylelib directory:
+#   mkdir -p ~/.matplotlib/stylelib
+#   cp scribe-theme.mplstyle ~/.matplotlib/stylelib/
+
+# --- Typography: serif, matching a Libertine/Times-based LaTeX document ---
+font.family:        serif
+font.serif:         STIXGeneral, Charter, Times New Roman, DejaVu Serif
+mathtext.fontset:   stix
+font.size:          9
+
+# --- Axes: recessive spines (only the baseline), warm-white surface -------
+axes.edgecolor:      (0.7647, 0.7608, 0.7176)  # #c3c2b7
+axes.labelcolor:     (0.0431, 0.0431, 0.0431)  # #0b0b0b
+axes.titlesize:      10
+axes.titleweight:    bold
+axes.facecolor:      (1.0, 1.0, 1.0)  # #ffffff -- matches the paper's white page, not warm-white
+axes.axisbelow:      True
+axes.spines.left:    False
+axes.spines.right:   False
+axes.spines.top:     False
+axes.spines.bottom:  True
+
+# --- Ticks: no tick marks, muted tick labels -------------------------------
+xtick.color:          (0.3216, 0.3176, 0.3059)  # #52514e
+ytick.color:          (0.3216, 0.3176, 0.3059)  # #52514e
+xtick.major.size:     0
+ytick.major.size:     0
+
+# --- Gridlines: hairline, solid, never dashed ------------------------------
+axes.grid:           True
+grid.color:          (0.8824, 0.8784, 0.8510)  # #e1e0d9
+grid.linewidth:      0.8
+grid.linestyle:      -
+
+# --- Text and figure surface ------------------------------------------------
+text.color:           (0.0431, 0.0431, 0.0431)  # #0b0b0b
+figure.facecolor:     (1.0, 1.0, 1.0)  # #ffffff -- matches the paper's white page, not warm-white
+savefig.facecolor:    (1.0, 1.0, 1.0)  # #ffffff -- matches the paper's white page, not warm-white
+savefig.bbox:         tight
+
+# --- Export: keep text selectable/searchable in the output PDF/SVG --------
+svg.fonttype:  none
+pdf.fonttype:  42

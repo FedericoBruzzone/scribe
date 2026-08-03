@@ -63,6 +63,7 @@
     - Monospace: **Inconsolata** (default; comment it out and uncomment the `beramono` line in the class to use **Bera Mono** instead)
 - **Matching Beamer theme**: `beamerthemescribe` brings the same style to slides (see [below](#beamer-theme)).
 - **Matching CV class**: `scribecv` brings the same style to CVs and resumes (see [below](#cv--resume)).
+- **Matching Matplotlib theme**: `matplotlib/` brings the same identity to figures (see [below](#matplotlib-theme)).
 
 ---
 
@@ -288,3 +289,29 @@ A full example is in the `example-cv` folder.
 \scribefooter{City}
 \end{document}
 ```
+
+## Matplotlib theme
+
+**`matplotlib/`** brings the `scribe` identity to figures: the `MidnightBlue`
+accent (`#007091`) with its HSL complement, recessive axes (baseline spine
+only, hairline y-only gridlines), and serif typography matching the paper's
+Libertine via font substitution (no usetex/pgf dependency). Two files:
+
+- `scribe-theme.mplstyle` — portable style sheet, usable from any repo via
+  `plt.style.use("/path/to/scribe-theme.mplstyle")`, or copy/symlink it into
+  `~/.matplotlib/stylelib/` to use it by name.
+- `scribe_mpl.py` — shared palette and mechanics: `setup()` (loads the style),
+  `style_axes()` (per-axis grid selection), `rounded_bars()` (rounded-top bar
+  groups), `label_bars()`. It knows nothing about a given paper's entities —
+  assign your data series to the palette in a small per-paper module.
+
+```python
+from scribe_mpl import setup, style_axes
+setup()  # once, before creating any Axes
+fig, ax = plt.subplots()
+style_axes(ax)  # recessive axes, y-only gridlines
+# ... plot ...
+```
+
+Reusing the theme in a new project: copy both files verbatim, then write a
+small module mapping your entities to the palette colors.

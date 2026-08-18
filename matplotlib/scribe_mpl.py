@@ -39,7 +39,7 @@ __all__ = [
     "GRAY_LIGHT", "GRAY_LIGHT_EDGE",
     "SURFACE", "INK_PRIMARY", "INK_SECONDARY", "INK_MUTED",
     "GRIDLINE", "AXIS", "BAR_WIDTH_FRAC",
-    "setup", "style_axes", "rounded_bars", "label_bars",
+    "tint", "setup", "style_axes", "rounded_bars", "label_bars",
 ]
 
 STYLE_PATH = os.path.join(os.path.dirname(__file__), "scribe-theme.mplstyle")
@@ -77,6 +77,27 @@ AXIS = "#c3c2b7"
 BAR_WIDTH_FRAC = 0.6  # of the category slot -- leaves visible air between groups, per marks-and-anatomy.md
 
 
+def tint(hex_color, pct):
+    """Blend hex_color with white, TikZ `color!pct` style: pct=100 returns
+    hex_color unchanged, pct=0 returns white, pct=45 is 45% hex_color + 55%
+    white. Used to derive a bar chart's lighter fill from the same full-
+    saturation hex Fig. 1/2's TikZ uses for `draw=`, so bars read as
+    filled+outlined shapes in the same family as those diagrams' boxes
+    (`draw=cdqblue, fill=cdqblue!10`) rather than flat, fully-saturated
+    blocks -- just at a less extreme percentage than the diagrams' 10%,
+    since a data bar's fill (unlike a label-carrying box) needs enough
+    contrast against the page to stay legible on its own.
+    """
+    r = int(hex_color[1:3], 16)
+    g = int(hex_color[3:5], 16)
+    b = int(hex_color[5:7], 16)
+    frac = pct / 100.0
+    r = round(r * frac + 255 * (1 - frac))
+    g = round(g * frac + 255 * (1 - frac))
+    b = round(b * frac + 255 * (1 - frac))
+    return f"#{r:02x}{g:02x}{b:02x}"
+
+
 def setup():
     """Call once at the top of every figure script before creating any Axes.
 
@@ -98,13 +119,18 @@ def style_axes(ax, *, y_only_grid=True):
         ax.grid(axis="x", visible=False)
 
 
-def rounded_bars(ax, bars, edgecolors, *, radius_pt=11, linewidth=1.5, n_arc=12):
+def rounded_bars(ax, bars, edgecolors, *, hatches=None, radius_pt=11, linewidth=1.5, n_arc=12):
     """Replace each Rectangle patch ax.bar() created with a rounded-top,
     flat-bottom shape (the "4px rounded data-ends anchored to the baseline"
     mark spec) plus a matching darker-shade edge, so bars read as
     filled+outlined shapes instead of flat color blocks.
 
     edgecolors: a single color (applied to every bar) or a list, one per bar.
+    hatches: optional -- a single hatch pattern string (applied to every
+    bar), a list (one per bar), or None (no hatch). Matplotlib draws the
+    hatch in the patch's edgecolor, so a bar's texture and its color both
+    encode which series it belongs to -- color alone isn't load-bearing for
+    distinguishing series (colorblind-safe, and survives grayscale print).
     radius_pt is in points -- call this AFTER setting final xlim/ylim, not
     before.
 
@@ -134,12 +160,14 @@ def rounded_bars(ax, bars, edgecolors, *, radius_pt=11, linewidth=1.5, n_arc=12)
     """
     if isinstance(edgecolors, str):
         edgecolors = [edgecolors] * len(bars)
+    if hatches is None or isinstance(hatches, str):
+        hatches = [hatches] * len(bars)
     fig = ax.figure
     t2d = ax.transData.transform
     d2t = ax.transData.inverted().transform
     px_per_pt = fig.dpi / 72.0
     patches = []
-    for bar, ec in zip(bars, edgecolors):
+    for bar, ec, hatch in zip(bars, edgecolors, hatches):
         x, y = bar.get_x(), bar.get_y()
         w, h = bar.get_width(), bar.get_height()
         fc = bar.get_facecolor()
@@ -182,6 +210,7 @@ def rounded_bars(ax, bars, edgecolors, *, radius_pt=11, linewidth=1.5, n_arc=12)
         patch = PathPatch(
             Path(verts, codes), transform=ax.transData,
             linewidth=linewidth, facecolor=fc, edgecolor=ec, joinstyle="round",
+            hatch=hatch,
         )
         ax.add_patch(patch)
         patches.append(patch)

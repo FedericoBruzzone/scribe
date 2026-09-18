@@ -217,15 +217,24 @@ def rounded_bars(ax, bars, edgecolors, *, hatches=None, radius_pt=11, linewidth=
     return patches
 
 
-def label_bars(ax, bars, values, fmt="{:.2f}", *, color=INK_PRIMARY, fontsize=8, offset_frac=0.02):
+def label_bars(ax, bars, values, fmt="{:.2f}", *, color=INK_PRIMARY, fontsize=8, offset_frac=0.02, errs=None):
     """Direct value labels at each bar's tip. Never colors the label with the
-    series color (marks-and-anatomy.md: "text never wears the data color")."""
+    series color (marks-and-anatomy.md: "text never wears the data color").
+
+    errs: optional, one absolute error-bar half-width per bar (same units as
+    `values`) -- when given, each label clears that bar's own error-bar cap
+    (height + err + offset) instead of a fixed height + offset, so a bar
+    with an unusually large error bar (e.g. a noisy external baseline) does
+    not draw its whisker cap through the label text above it.
+    """
     ymax = ax.get_ylim()[1]
     offset = ymax * offset_frac
-    for bar, v in zip(bars, values):
+    if errs is None:
+        errs = [0] * len(bars)
+    for bar, v, e in zip(bars, values, errs):
         ax.text(
             bar.get_x() + bar.get_width() / 2,
-            bar.get_height() + offset,
+            bar.get_height() + e + offset,
             fmt.format(v),
             ha="center", va="bottom",
             color=color, fontsize=fontsize,

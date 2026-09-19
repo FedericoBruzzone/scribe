@@ -10,7 +10,7 @@
     size=custom,
     width=170,     % cm
     height=110,    % cm
-    scale=1.4,     % font scale factor (1.4 → ~15pt base, readable at ~1 m)
+    scale=1.8,     % font scale factor (1.8 → ~20pt base, readable at ~1 m)
     % debug,       % uncomment to draw a grid overlay for layout debugging
 ]{beamerposter}
 
@@ -26,10 +26,10 @@
 \usepackage{lipsum}
 
 % ---- Logos ----
-\posterlogoleft{\includegraphics[height=6cm]{LLVM}}
-\posterlogoright{\includegraphics[height=6cm]{MLIR}}
+\posterlogoleft{\includegraphics[height=9cm]{LLVM}}
+\posterlogoright{\includegraphics[height=9cm]{MLIR}}
 
-\title{Your Poster Title Goes Here}
+\title{A Multi-Dimensional, Per-Pass Empirical Study of the LLVM Optimization Pipeline}
 \author[Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}, Mario \textcolor{scribecomplement}{\textbf{Rossi}}]{Federico Bruzzone \and Mario Rossi}
 \institute{University of Milan, Italy \textbullet{} Computer Science Department}
 \date{
@@ -55,7 +55,7 @@
 }
 
 % Short version for the footline
-\title[Short Poster Title]{Your Poster Title Goes Here}
+\title[Short Poster Title]{A Multi-Dimensional, Per-Pass Empirical Study of the LLVM Optimization Pipeline}
 
 % Contact info shown on the right of the footline
 \postercontact{%
@@ -146,23 +146,46 @@
 
 \vskip0.8cm
 
-\begin{block}{Links}
-    \hypersetup{hidelinks}%
-    \begin{columns}[T, totalwidth=\linewidth]
-        \begin{column}{0.5\linewidth}
+\vskip0.8cm
+
+\hypersetup{hidelinks}%
+\begin{columns}[T, totalwidth=\linewidth]
+    \begin{column}{0.47\linewidth}
+        \begin{tcolorbox}[
+            title={\centering\usebeamerfont{block title}\textbf{Paper}},
+            colframe=scribetertiary,
+            colback=white,
+            colbacktitle=scribetertiary!25!white,
+            coltitle=black,
+            arc=2mm, boxrule=0.6pt,
+            toptitle=0.4em, bottomtitle=0.4em,
+            left=0.5em, right=0.5em, top=0.5em, bottom=0.5em,
+            halign=center,
+        ]
             \centering
-            {\small\textbf{Paper}}\\[0.3em]
-            \qrcode[height=4.5cm]{https://example.com/paper}\\[0.3em]
+            \qrcode[height=4cm]{https://example.com/paper}\\[0.4em]
             {\footnotesize\url{https://example.com/paper}}
-        \end{column}
-        \begin{column}{0.5\linewidth}
+        \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.06\linewidth}\end{column}
+    \begin{column}{0.47\linewidth}
+        \begin{tcolorbox}[
+            title={\centering\usebeamerfont{block title}\textbf{Blog Post}},
+            colframe=scribetertiary,
+            colback=white,
+            colbacktitle=scribetertiary!25!white,
+            coltitle=black,
+            arc=2mm, boxrule=0.6pt,
+            toptitle=0.4em, bottomtitle=0.4em,
+            left=0.5em, right=0.5em, top=0.5em, bottom=0.5em,
+            halign=center,
+        ]
             \centering
-            {\small\textbf{Blog Post}}\\[0.3em]
-            \qrcode[height=4.5cm]{https://example.com/blog}\\[0.3em]
+            \qrcode[height=4cm]{https://example.com/blog}\\[0.4em]
             {\footnotesize\url{https://example.com/blog}}
-        \end{column}
-    \end{columns}
-\end{block}
+        \end{tcolorbox}
+    \end{column}
+\end{columns}
 
 \end{column}
 

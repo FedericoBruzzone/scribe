@@ -79,7 +79,7 @@
 % ========== Font shapes ==========
 % =================================
 \setbeamerfont{normal text}{family=\rmfamily}
-\setbeamerfont{title in headline}{series=\bfseries, size=\VeryHuge, family=\rmfamily}
+\setbeamerfont{title in headline}{series=\bfseries, size=\huge, family=\rmfamily}
 \setbeamerfont{author in headline}{size=\Large, family=\rmfamily}
 \setbeamerfont{institute in headline}{size=\Large, family=\rmfamily}
 \setbeamerfont{date in headline}{size=\LARGE, family=\rmfamily}
@@ -167,10 +167,10 @@
     \vskip1.8cm
     \makeatletter\noindent\hspace*{-\beamer@leftmargin}\makeatother
     \begin{columns}[c, totalwidth=\paperwidth]
-      \begin{column}{0.15\paperwidth}%
+      \begin{column}{0.12\paperwidth}%
         \centering\@posterlogoleft
       \end{column}
-      \begin{column}{0.70\paperwidth}%
+      \begin{column}{0.76\paperwidth}%
         \centering
         {\usebeamerfont{title in headline}\rmfamily\color{black}\inserttitle\par}%
         \vskip0.7cm
@@ -186,7 +186,7 @@
             \posterdatedisplay\par}%
         \fi
       \end{column}
-      \begin{column}{0.15\paperwidth}%
+      \begin{column}{0.12\paperwidth}%
         \centering\@posterlogoright
       \end{column}
     \end{columns}
@@ -295,7 +295,7 @@
   \begin{column}{#1}%
     \centering
     \vskip0.3cm
-    {\color{scribetertiary!60!white}\rule{0.8pt}{88cm}}%
+    {\color{scribetertiary!60!white}\rule{0.8pt}{\dimexpr\paperheight - 28cm\relax}}%
   \end{column}%
 }
 

@@ -1,6 +1,6 @@
 # `scribe`
 
-**`scribe`** is a minimalist, opinionated $\LaTeX$ document class, beamer style, and CV class for academic technical writing, presentations, and resumes. 
+**`scribe`** is a minimalist, opinionated $\LaTeX$ document class, beamer themes, and CV class for academic technical writing, presentations, posters, and resumes. 
 <!-- It is designed to provide clean defaults, professional typography, and convenient commands for research papers, systematic literature reviews, technical reports, and presentations. -->
 <!-- It is partially inspired by the `acmart` class. -->
 
@@ -42,6 +42,12 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="example-poster/main.pdf">
+    <img src="docs/poster-preview.png" alt="Poster preview" width="700"/>
+  </a>
+</p>
+
 ## Features
 
 - **Minimalist Design**: Focuses on content with a clean, professional layout.
@@ -62,6 +68,7 @@
     - Serif: **Libertine**
     - Monospace: **Inconsolata** (default; comment it out and uncomment the `beramono` line in the class to use **Bera Mono** instead)
 - **Matching Beamer theme**: `beamerthemescribe` brings the same style to slides (see [below](#beamer-theme)).
+- **Matching Poster theme**: `beamerthemescribeposter` brings the same style to large-format posters (see [below](#poster-theme)).
 - **Matching CV class**: `scribecv` brings the same style to CVs and resumes (see [below](#cv--resume)).
 - **Matching Matplotlib theme**: `matplotlib/` brings the same identity to figures (see [below](#matplotlib-theme)).
 
@@ -289,6 +296,175 @@ A full example is in the `example-cv` folder.
 \scribefooter{City}
 \end{document}
 ```
+
+## Poster theme
+
+**`beamerthemescribeposter`** brings the `scribe` identity to large-format academic
+posters: Libertine serif via XeLaTeX/fontspec, `MidnightBlue` accent, amber block
+headers, and the `\scribedivider` ornament. It is built on top of `beamer` +
+`beamerposter` and targets landscape boards (tested at 170 × 110 cm / 6 ft × 4 ft).
+A full example is in the `example-poster` folder.
+
+### Features
+
+- **Three-zone headline**: logo left · title/authors/date · logo right
+- **tcolorbox blocks**: amber-tinted header, white body — three variants (`block`, `alertblock`, `exampleblock`)
+- **Callout boxes**: same `info`, `warn`, `tip`, `note` as the paper class (and inline variants)
+- **Column separator**: `\postercolumnsep` — a thin accent rule between content columns, auto-sized to the body height
+- **QR codes**: `\qrcode` included out of the box
+- **Footer**: author(s) + emails · title · date, all centered
+- **Optional handwriting font**: `\fontcaveat{text}` for accents (requires Caveat, loaded in the document)
+
+### 1. Add `beamerthemescribeposter.sty` to your project folder.
+
+> **Note:** `beamerthemescribeposter` requires **XeLaTeX** (it uses `fontspec` and
+> `unicode-math` for Libertine OTF). Do **not** compile with pdfLaTeX.
+
+### 2. (Optional) Add the Caveat font
+
+`\fontcaveat{...}` is a handwriting accent used for the date/conference line. To
+enable it, download [Caveat](https://fonts.google.com/specimen/Caveat) and place
+the static TTF files under `font/static/` in your project:
+
+```
+your-project/
+├── main.tex
+├── beamerthemescribeposter.sty
+└── font/
+    └── static/
+        ├── Caveat-Regular.ttf
+        └── Caveat-Bold.ttf
+```
+
+Then declare the font family in your preamble (before `\begin{document}`):
+
+```latex
+\newfontfamily\caveatfont[
+    Path        = font/static/,
+    UprightFont = Caveat-Regular.ttf,
+    BoldFont    = Caveat-Bold.ttf,
+]{Caveat}
+```
+
+If you don't need the handwriting font, simply omit the `\newfontfamily` declaration
+and don't use `\fontcaveat`.
+
+### 3. In your main `.tex` file:
+
+```latex
+% !TEX program = xelatex
+\documentclass[final]{beamer}
+
+\usepackage[
+    orientation=landscape,
+    size=custom,
+    width=170,   % cm — adjust to your board
+    height=110,  % cm
+    scale=1.8,   % font scale: 1.8 → ~20 pt body, readable at ~1 m
+]{beamerposter}
+
+\usetheme{scribeposter}
+
+% ---- Optional: Caveat handwriting font (see step 2) ----
+\newfontfamily\caveatfont[
+    Path        = font/static/,
+    UprightFont = Caveat-Regular.ttf,
+    BoldFont    = Caveat-Bold.ttf,
+]{Caveat}
+
+% ---- Logos (left and right of the headline) ----
+\posterlogoleft{\includegraphics[height=9cm]{logo-left}}
+\posterlogoright{\includegraphics[height=9cm]{logo-right}}
+
+% ---- Metadata ----
+\title{Your Poster Title Goes Here}
+\author[F. Bruzzone]{Federico Bruzzone}
+\institute{University of Milan, Italy}
+\date{\fontcaveat{Conference Name \textbullet{} City \textbullet{} Date}}
+
+% ---- Rich headline display (colors, \orcidlink, etc.) ----
+\renewcommand{\posterauthordisplay}{%
+    Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}%
+}
+\renewcommand{\posterdatedisplay}{%
+    \fontcaveat{Conference Name \textbullet{} City \textbullet{} Date}%
+}
+
+% ---- Footer contact info ----
+\postercontact{f.bruzzone@unimi.it}
+
+% Short title for the footer
+\title[Short Title]{Your Poster Title Goes Here}
+
+\begin{document}
+\begin{frame}[t]
+\vskip0.8cm
+
+\posterbodycenter  % centers the column group between the outer margins
+\begin{columns}[T, totalwidth=\textwidth]
+
+\begin{column}{0.015\textwidth}\end{column}  % outer left margin
+
+% ===== Column 1 =====
+\begin{column}{0.30\textwidth}
+    \begin{block}{Introduction}
+        Body text here.
+        \begin{itemize}
+            \item First point
+            \item Second point
+        \end{itemize}
+    \end{block}
+\end{column}
+
+\postercolumnsep  % thin accent rule between columns
+
+% ===== Column 2 =====
+\begin{column}{0.30\textwidth}
+    \begin{block}{Approach}
+        \begin{infobox}{Key Result}
+            The proposed approach achieves a significant improvement.
+        \end{infobox}
+    \end{block}
+\end{column}
+
+\postercolumnsep
+
+% ===== Column 3 =====
+\begin{column}{0.30\textwidth}
+    \begin{block}{References}
+        \footnotesize
+        \bibliographystyle{unsrt}
+        \bibliography{local}
+    \end{block}
+\end{column}
+
+\begin{column}{0.015\textwidth}\end{column}  % outer right margin
+
+\end{columns}
+\end{frame}
+\end{document}
+```
+
+> **Column widths must sum to 1.0:** with three content columns and two separators,
+> `2×0.015 + 3×0.30 + 2×0.035 = 1.000`. Adjust the separator width via
+> `\postercolumnsep[<width>]` (default `0.035\textwidth`).
+
+### Poster-specific commands
+
+| Command | Description |
+|---|---|
+| `\posterlogoleft{<content>}` | Logo placed in the left column of the headline |
+| `\posterlogoright{<content>}` | Logo placed in the right column of the headline |
+| `\posterauthordisplay` | Override author display in the headline (full formatting freedom) |
+| `\posterinstitutedisplay` | Override institute display in the headline |
+| `\posterdatedisplay` | Override date display in the headline |
+| `\postercontact{<content>}` | Contact info shown in the footer (replaces `\insertshortauthor` if set) |
+| `\posterbodycenter` | Place immediately before `\begin{columns}` to center the body between outer margins |
+| `\postercolumnsep[<width>]` | Thin accent rule separating content columns (default `0.035\textwidth`) |
+| `\fontcaveat{<text>}` | Render text in Caveat (handwriting font); requires `\newfontfamily\caveatfont` |
+| `\scribedefinecomment{name}{color}` | Define a named inline comment (same as the paper class) |
+
+---
 
 ## Matplotlib theme
 

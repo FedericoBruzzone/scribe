@@ -1,0 +1,146 @@
+% !TEX program = xelatex
+\documentclass[final]{beamer}
+
+% ============================================================
+% Poster dimensions: 6 ft × 4 ft whiteboard → 170 × 110 cm
+% (board is 182.9 × 121.9 cm; we leave ~6 cm margin per side)
+% ============================================================
+\usepackage[
+    orientation=landscape,
+    size=custom,
+    width=170,     % cm
+    height=110,    % cm
+    scale=1.4,     % font scale factor (1.4 → ~15pt base, readable at ~1 m)
+    % debug,       % uncomment to draw a grid overlay for layout debugging
+]{beamerposter}
+
+\usetheme{scribeposter}
+
+% ---- Caveat font: use \fontcaveat{text} anywhere in the poster ----
+\newfontfamily\caveatfont[
+    Path            = font/static/,
+    UprightFont     = Caveat-Regular.ttf,
+    BoldFont        = Caveat-Bold.ttf,
+]{Caveat}
+
+\usepackage{lipsum}
+
+% ---- Logos ----
+\posterlogoleft{\includegraphics[height=6cm]{LLVM}}
+\posterlogoright{\includegraphics[height=6cm]{MLIR}}
+
+\title{Your Poster Title Goes Here}
+\author[Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}]{Federico Bruzzone}
+\institute{University of Milan, Italy \textbullet{} Computer Science Department}
+\date{
+  \fontcaveat{
+      \textcolor{scribecomplement}{\textbf{LLVM Developers' Meeting}}
+      \textbullet{} Santa Clara, California
+      \textbullet{} October 26-28, 2026%
+    }%
+}
+
+% Headline display — full formatting freedom (colors, \orcidlink, etc.)
+\renewcommand{\posterauthordisplay}{%
+    Federico \textcolor{scribecomplement}{\textbf{Bruzzone}} % \, \orcidlink{0000-0002-8701-8853}%
+}
+\renewcommand{\posterdatedisplay}{%
+    \fontcaveat{
+      \textcolor{scribecomplement}{\textbf{LLVM Developers' Meeting}}
+      \textbullet{} Santa Clara, California
+      \textbullet{} October 26-28, 2026%
+    }%
+}
+
+% Short version for the footline
+\title[Short Poster Title]{Your Poster Title Goes Here}
+
+\begin{document}
+\begin{frame}[t]
+
+\vskip0.8cm
+
+\begin{columns}[T, totalwidth=\textwidth]
+
+\begin{column}{0.015\textwidth}\end{column}
+
+% ========================
+% ===== Column 1 =========
+% ========================
+\begin{column}{0.30\textwidth}
+
+\begin{block}{Introduction}
+    \lipsum[1][1-4]
+    \begin{itemize}
+        \item First key point of the work
+        \item Second key point
+        \item Third key point
+    \end{itemize}
+\end{block}
+
+\vskip0.8cm
+
+\begin{block}{Motivation}
+    \lipsum[2][1-4]
+\end{block}
+
+\end{column}
+
+\postercolumnsep
+
+% ========================
+% ===== Column 2 =========
+% ========================
+\begin{column}{0.30\textwidth}
+
+\begin{block}{Approach}
+    \lipsum[3][1-3]
+    \begin{equation*}
+        f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2\pi i \xi x}\, d\xi
+    \end{equation*}
+    \lipsum[3][4-5]
+\end{block}
+
+\vskip0.8cm
+
+\begin{block}{Results}
+    \lipsum[4][1-3]
+    \begin{infobox}{Key Result}
+        The proposed approach achieves a significant improvement over baselines.
+    \end{infobox}
+\end{block}
+
+\end{column}
+
+\postercolumnsep
+
+% ========================
+% ===== Column 3 =========
+% ========================
+\begin{column}{0.30\textwidth}
+
+\begin{block}{Discussion}
+    \lipsum[5][1-3]
+    \begin{itemize}
+        \item \dinggreen{52}\; Advantage one
+        \item \dinggreen{52}\; Advantage two
+        \item \dingred{56}\; Known limitation
+    \end{itemize}
+\end{block}
+
+\vskip0.8cm
+
+\begin{block}{References}
+    \footnotesize
+    \bibliographystyle{unsrt}
+    \bibliography{local}
+\end{block}
+
+\end{column}
+
+\begin{column}{0.015\textwidth}\end{column}
+
+\end{columns}
+
+\end{frame}
+\end{document}

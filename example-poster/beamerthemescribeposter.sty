@@ -1,0 +1,334 @@
+%%----------------------------------------------------------------------
+%% beamerthemescribeposter.sty
+%% A beamer poster theme matching the `scribe` document class.
+%% author: Federico Bruzzone (18-09-2026) last update: (18-09-2026)
+%%----------------------------------------------------------------------
+%%
+%% Usage:
+%%   \documentclass[final]{beamer}
+%%   \usepackage[orientation=landscape, size=custom,
+%%               width=170, height=110, scale=1.4]{beamerposter}
+%%   \usetheme{scribeposter}
+%%
+%% Poster commands:
+%%   \posterlogoleft{<content>}   logo on the left of the headline
+%%   \posterlogoright{<content>}  logo on the right of the headline
+
+\def\filename{beamerthemescribeposter}
+\def\fileversion{v0.1.0 (author: Federico Bruzzone)}
+\def\filedate{2026/09/18}
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{\filename}[\filedate{} \fileversion]
+\typeout{Beamer poster theme \filename', \fileversion, <\filedate>}
+
+\mode<presentation>
+
+% ===========================
+% ========== Fonts ==========
+% ===========================
+% Requires XeLaTeX (fontenc/inputenc are pdflatex-only and must not be used here).
+% \setmainfont explicitly binds \rmfamily to Libertine so beamer inherits it everywhere.
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\setmainfont[
+  Extension      = .otf,
+  UprightFont    = LinLibertine_R,
+  BoldFont       = LinLibertine_RB,
+  ItalicFont     = LinLibertine_I,
+  BoldItalicFont = LinLibertine_RBI,
+]{LinLibertine}
+\setmathfont[Extension=.otf]{LibertinusMath-Regular}
+\usefonttheme{professionalfonts} % prevents beamer from overriding unicode-math
+\usefonttheme{serif}             % text in \rmfamily (Libertine)
+\RequirePackage[english]{babel}
+
+% ============================
+% ========== Colors ==========
+% ============================
+\RequirePackage[dvipsnames]{xcolor}
+
+\colorlet{scribeaccent}{MidnightBlue}
+\colorlet{scribemuted}{black!55}
+% Accent complement: dark muted purple / aubergine
+\definecolor{scribecomplement}{RGB}{72, 40, 88}
+% Second complementary: warm amber / gold
+\definecolor{scribetertiary}{RGB}{140, 90, 20}
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{structure}{fg=scribeaccent}
+\setbeamercolor{alerted text}{fg=Red}
+
+\setbeamercolor{headline}{fg=black, bg=scribeaccent!20!white}
+\setbeamercolor{title in headline}{fg=black}
+\setbeamercolor{author in headline}{fg=black!80}
+\setbeamercolor{institute in headline}{fg=black!70}
+\setbeamercolor{date in headline}{fg=black!65}
+
+\setbeamercolor{footline}{fg=black, bg=scribeaccent!20!white}
+
+\setbeamercolor{block title}{fg=white, bg=scribecomplement}
+\setbeamercolor{block body}{fg=black, bg=white}
+\setbeamercolor{block title alerted}{fg=white, bg=Red!85!black}
+\setbeamercolor{block body alerted}{fg=black, bg=white}
+\setbeamercolor{block title example}{fg=white, bg=ForestGreen!85!black}
+\setbeamercolor{block body example}{fg=black, bg=white}
+
+% =================================
+% ========== Font shapes ==========
+% =================================
+\setbeamerfont{normal text}{family=\rmfamily}
+\setbeamerfont{title in headline}{series=\bfseries, size=\VeryHuge, family=\rmfamily}
+\setbeamerfont{author in headline}{size=\Large, family=\rmfamily}
+\setbeamerfont{institute in headline}{size=\Large, family=\rmfamily}
+\setbeamerfont{date in headline}{size=\LARGE, family=\rmfamily}
+\setbeamerfont{block title}{series=\bfseries, size=\Large, family=\rmfamily}
+\setbeamerfont{block body}{size=\normalsize, family=\rmfamily}
+\setbeamerfont{footline}{size=\normalsize, family=\rmfamily}
+\setbeamerfont{caption}{family=\sffamily, size=\small}
+\setbeamerfont{caption name}{series=\bfseries, family=\sffamily}
+\setbeamerfont{footnote}{size=\small, family=\rmfamily}
+\setbeamerfont{footnote mark}{size=\small, family=\rmfamily}
+
+% =====================================
+% ========== Inner elements ===========
+% =====================================
+\useinnertheme{default}
+\setbeamertemplate{itemize item}{\small\raise0.4pt\hbox{\color{scribeaccent}$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\color{scribeaccent}\textendash}
+\setbeamertemplate{itemize subsubitem}{\color{scribeaccent}\textperiodcentered}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}{\raggedright\insertcaptionname~\insertcaptionnumber:~\insertcaption\par}
+\setbeamertemplate{caption label separator}{: }
+
+% Block style: tcolorbox with colored title bar (scribecomplement bg, white text)
+% and white body — all three block types share the same structure.
+% #1 = frame/border color  #2 = title background  #3 = title text color
+\newcommand{\@scribeblock}[3]{%
+  \vskip0.8em
+  \begin{tcolorbox}[
+    title={\usebeamerfont{block title}\insertblocktitle},
+    colframe=#1,
+    colback=white,
+    colbacktitle=#2,
+    coltitle=#3,
+    arc=2mm,
+    boxrule=0.6pt,
+    toptitle=0.5em, bottomtitle=0.5em,
+    lefttitle=0.7em, righttitle=0.7em,
+    left=0.7em, right=0.7em, top=0.6em, bottom=0.6em,
+  ]%
+  \usebeamerfont{block body}\setlength{\parskip}{0.5em}%
+}
+\setbeamertemplate{block begin}{\@scribeblock{scribetertiary}{scribetertiary!25!white}{black}}
+\setbeamertemplate{block end}{\end{tcolorbox}\vskip0.5em}
+\setbeamertemplate{block alerted begin}{\@scribeblock{Red!85!black}{Red!85!black!40!white}{black}}
+\setbeamertemplate{block alerted end}{\end{tcolorbox}\vskip0.5em}
+\setbeamertemplate{block example begin}{\@scribeblock{ForestGreen!85!black}{ForestGreen!85!black!40!white}{black}}
+\setbeamertemplate{block example end}{\end{tcolorbox}\vskip0.5em}
+
+\setlength{\parskip}{0.5em}
+
+% Zero beamer's text margins so \textwidth = \paperwidth.
+% The frame body spans the full paper width; outer margins are handled
+% as explicit columns in the body layout instead.
+\AtBeginDocument{%
+  \makeatletter
+  \beamer@leftmargin=0pt%
+  \beamer@rightmargin=0pt%
+  \setlength{\textwidth}{\paperwidth}%
+  \advance\textwidth by -\beamer@leftsidebar%
+  \advance\textwidth by -\beamer@rightsidebar%
+  \makeatother
+}
+
+% =====================================
+% ========== Headline =================
+% =====================================
+% \posterlogoleft{<content>} and \posterlogoright{<content>} place graphics
+% in the left and right columns of the headline respectively.
+\newcommand{\posterlogoleft}[1]{\def\@posterlogoleft{#1}}
+\newcommand{\posterlogoright}[1]{\def\@posterlogoright{#1}}
+\def\@posterlogoleft{}
+\def\@posterlogoright{}
+
+% \posterauthordisplay, \posterinstitutedisplay, \posterdatedisplay
+% Override these for rich formatting (colors, etc.) in the headline.
+% \author{}/\institute{}/\date{} remain for PDF metadata and footline.
+\newcommand{\posterauthordisplay}{\insertauthor}
+\newcommand{\posterinstitutedisplay}{\insertinstitute}
+\newcommand{\posterdatedisplay}{\insertdate}
+
+\setbeamertemplate{headline}{%
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}%
+    \vskip1.8cm
+    \begin{columns}[c, totalwidth=\paperwidth]
+      \begin{column}{0.15\paperwidth}%
+        \centering\@posterlogoleft
+      \end{column}
+      \begin{column}{0.70\paperwidth}%
+        \centering
+        {\usebeamerfont{title in headline}\rmfamily\color{black}\inserttitle\par}%
+        \vskip0.7cm
+        {\rmfamily\usebeamerfont{author in headline}\color{black!80}%
+          \posterauthordisplay
+          \ifx\insertinstitute\@empty\else
+            {\color{black!70}\enspace\textbullet\enspace
+            \usebeamerfont{institute in headline}\posterinstitutedisplay}%
+          \fi\par}%
+        \ifx\insertdate\@empty\else
+          \vskip0.5cm
+          {\rmfamily\usebeamerfont{date in headline}\color{black!65}%
+            \posterdatedisplay\par}%
+        \fi
+      \end{column}
+      \begin{column}{0.15\paperwidth}%
+        \centering\@posterlogoright
+      \end{column}
+    \end{columns}
+    \vskip1.8cm
+  \end{beamercolorbox}%
+}
+
+% =====================================
+% ========== Footline =================
+% =====================================
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth, ht=3cm, dp=0pt]{footline}%
+    \vbox to 3cm{%
+      \vss
+      \hbox to \paperwidth{\hfil
+        \begingroup
+        \hypersetup{allcolors=black}%
+        {\rmfamily\usebeamerfont{footline}\color{black}%
+          \insertshortauthor\enspace\textbullet\enspace%
+          \insertshorttitle\enspace\textbullet\enspace%
+          \insertdate}%
+        \endgroup
+        \hfil}%
+      \vss}%
+  \end{beamercolorbox}%
+}
+
+% =====================================
+% ========== Frame title ==============
+% =====================================
+% Suppressed: the headline is the only title element in poster mode.
+\setbeamertemplate{frametitle}{}
+
+% ==============================
+% ========== Graphics ==========
+% ==============================
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{amsmath,amsthm,mathtools}
+\RequirePackage{listings}
+\RequirePackage{orcidlink}
+\RequirePackage[numbers,sort&compress]{natbib}
+\setlength{\bibsep}{4pt}
+
+% Colored dingbats (ported from scribe.cls)
+\RequirePackage{pifont}
+\newcommand{\dingred}[1]{{\color{Red}\ding{#1}}}
+\newcommand{\dinggreen}[1]{{\color{ForestGreen}\ding{#1}}}
+\newcommand{\dingblue}[1]{{\color{scribeaccent}\ding{#1}}}
+
+% =================================
+% ========== Callout boxes ========
+% =================================
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbset{
+  scribebox/.style={
+    arc=3mm,
+    boxrule=0mm,
+    leftrule=4mm,
+    colback=white,
+    colbacktitle=black!10!white,
+    coltitle=black,
+    fonttitle=\bfseries,
+    left=2.5mm, lefttitle=2.5mm,
+    right=2mm, righttitle=2mm,
+    top=1.5mm, bottom=1.5mm,
+    toptitle=1mm, bottomtitle=1mm,
+    title={#1},
+  },
+  scribeboxinline/.style={
+    on line,
+    arc=2mm,
+    boxrule=0pt,
+    leftrule=3mm,
+    fontupper=\bfseries,
+    boxsep=0pt,
+    left=2mm, right=2mm,
+    top=0.5mm, bottom=0.5mm,
+  },
+}
+\newcommand{\scribedefinebox}[2]{%
+  \newtcolorbox{#1box}[1]{colframe=#2, scribebox={##1}}%
+  \expandafter\newtcbox\csname #1boxinline\endcsname{colframe=#2, scribeboxinline}%
+}
+\scribedefinebox{info}{MidnightBlue}
+\scribedefinebox{warn}{BrickRed}
+\scribedefinebox{tip}{ForestGreen}
+\scribedefinebox{note}{BurntOrange}
+
+% \postercolumnsep[<width>] — thin accent rule separating content columns.
+% Place between \end{column}...\begin{column} pairs inside a columns environment.
+% Default width matches a 3-column layout with 0.305\textwidth content columns.
+\newcommand{\postercolumnsep}[1][0.035\textwidth]{%
+  \begin{column}{#1}%
+    \centering
+    \vskip0.3cm
+    {\color{scribeaccent!30!white}\rule{0.8pt}{88cm}}%
+  \end{column}%
+}
+
+% \fontcaveat{<text>} — renders text in Caveat (handwriting font).
+% Requires \newfontfamily\caveatfont defined in the document preamble.
+\newcommand{\fontcaveat}[1]{{\caveatfont #1}}
+
+% =====================================
+% ========== scribe commands ==========
+% =====================================
+\newcommand{\scribedivider}{%
+  \par\medskip
+  \noindent
+  \makebox[\linewidth]{%
+    \hspace{2em}%
+    \makebox[0pt][l]{\color{scribeaccent}\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+    \hfill{\color{scribeaccent}\ding{71}}\hfill
+    \makebox[0pt][r]{\color{scribeaccent}\rule[0.75ex]{\dimexpr0.5\linewidth - 3em}{0.5pt}}%
+    \hspace{2em}%
+  }%
+  \par\medskip
+}
+
+\newcommand{\tool}[1]{\textsc{#1}}
+
+\newif\ifscribeshowcomments
+\scribeshowcommentstrue
+
+\newcommand{\scribedefinecomment}[2]{%
+  \expandafter\newcommand\csname #1comment\endcsname[1]{%
+    \ifscribeshowcomments%
+      \textcolor{#2}{[\textbf{#1}] \textit{##1}}%
+    \fi%
+  }%
+}
+
+% =====================================
+% ========== Links / hyperref =========
+% =====================================
+\hypersetup{
+  colorlinks=true,
+  linkcolor=scribeaccent,
+  citecolor=scribeaccent,
+  urlcolor=scribeaccent
+}
+
+\mode<all>

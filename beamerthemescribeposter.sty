@@ -56,6 +56,7 @@
 \definecolor{scribetertiary}{RGB}{140, 90, 20}
 
 \setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{background canvas}{bg=black!2!white}
 \setbeamercolor{structure}{fg=scribeaccent}
 \setbeamercolor{alerted text}{fg=Red}
 
@@ -94,7 +95,7 @@
 % ========== Inner elements ===========
 % =====================================
 \useinnertheme{default}
-\setbeamertemplate{itemize item}{\small\raise0.4pt\hbox{\color{scribeaccent}$\blacktriangleright$}}
+\setbeamertemplate{itemize item}{\normalsize\raise0.4pt\hbox{\color{black}$\bullet$}}
 \setbeamertemplate{itemize subitem}{\color{scribeaccent}\textendash}
 \setbeamertemplate{itemize subsubitem}{\color{scribeaccent}\textperiodcentered}
 \setbeamertemplate{enumerate items}[default]
@@ -131,16 +132,16 @@
 \setlength{\parskip}{0.5em}
 
 % Zero beamer's text margins so \textwidth = \paperwidth.
-% The frame body spans the full paper width; outer margins are handled
-% as explicit columns in the body layout instead.
-\AtBeginDocument{%
-  \makeatletter
-  \beamer@leftmargin=0pt%
-  \beamer@rightmargin=0pt%
-  \setlength{\textwidth}{\paperwidth}%
-  \advance\textwidth by -\beamer@leftsidebar%
-  \advance\textwidth by -\beamer@rightsidebar%
-  \makeatother
+% \AfterEndPreamble runs after ALL \AtBeginDocument hooks (including
+% beamerposter's), guaranteeing these values are not overwritten.
+\RequirePackage{etoolbox}
+% \posterbodycenter must be placed immediately before \begin{columns}
+% inside the frame.  It shifts the columns group left by \beamer@leftmargin
+% so that the visible outer margins on both sides of the body are equal.
+% (Without this, beamerposter positions the frame body 2×\beamer@leftmargin
+% from the paper left edge but 0 from the right — visibly asymmetric.)
+\newcommand{\posterbodycenter}{%
+  \makeatletter\noindent\hspace*{-\beamer@leftmargin}\makeatother
 }
 
 % =====================================
@@ -164,6 +165,7 @@
   \leavevmode
   \begin{beamercolorbox}[wd=\paperwidth]{headline}%
     \vskip1.8cm
+    \makeatletter\noindent\hspace*{-\beamer@leftmargin}\makeatother
     \begin{columns}[c, totalwidth=\paperwidth]
       \begin{column}{0.15\paperwidth}%
         \centering\@posterlogoleft
@@ -195,17 +197,25 @@
 % =====================================
 % ========== Footline =================
 % =====================================
+% \postercontact{<content>} — contact info shown on the right of the footline.
+\newcommand{\postercontact}[1]{\def\@postercontact{#1}}
+\def\@postercontact{}
+
 \setbeamertemplate{footline}{%
   \leavevmode
   \begin{beamercolorbox}[wd=\paperwidth, ht=3cm, dp=0pt]{footline}%
     \vbox to 3cm{%
       \vss
       \hbox to \paperwidth{\hfil
-        \begingroup
-        \hypersetup{allcolors=black}%
+        \begingroup\hypersetup{allcolors=black}%
         {\rmfamily\usebeamerfont{footline}\color{black}%
-          \insertshortauthor\enspace\textbullet\enspace%
-          \insertshorttitle\enspace\textbullet\enspace%
+          \ifx\@postercontact\@empty
+            \insertshortauthor
+          \else
+            \@postercontact
+          \fi
+          \enspace\textbullet\enspace
+          \insertshorttitle\enspace\textbullet\enspace
           \insertdate}%
         \endgroup
         \hfil}%
@@ -223,6 +233,7 @@
 % ========== Graphics ==========
 % ==============================
 \RequirePackage{graphicx}
+\RequirePackage{qrcode}
 \RequirePackage{booktabs}
 \RequirePackage{array}
 \RequirePackage{amsmath,amsthm,mathtools}
@@ -248,7 +259,7 @@
     boxrule=0mm,
     leftrule=4mm,
     colback=white,
-    colbacktitle=black!10!white,
+    colbacktitle=scribeaccent!15!white,
     coltitle=black,
     fonttitle=\bfseries,
     left=2.5mm, lefttitle=2.5mm,
@@ -284,7 +295,7 @@
   \begin{column}{#1}%
     \centering
     \vskip0.3cm
-    {\color{scribeaccent!30!white}\rule{0.8pt}{88cm}}%
+    {\color{scribetertiary!60!white}\rule{0.8pt}{88cm}}%
   \end{column}%
 }
 

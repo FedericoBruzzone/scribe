@@ -30,7 +30,7 @@
 \posterlogoright{\includegraphics[height=6cm]{MLIR}}
 
 \title{Your Poster Title Goes Here}
-\author[Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}]{Federico Bruzzone}
+\author[Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}, Mario \textcolor{scribecomplement}{\textbf{Rossi}}]{Federico Bruzzone \and Mario Rossi}
 \institute{University of Milan, Italy \textbullet{} Computer Science Department}
 \date{
   \fontcaveat{
@@ -42,7 +42,9 @@
 
 % Headline display — full formatting freedom (colors, \orcidlink, etc.)
 \renewcommand{\posterauthordisplay}{%
-    Federico \textcolor{scribecomplement}{\textbf{Bruzzone}} % \, \orcidlink{0000-0002-8701-8853}%
+    Federico \textcolor{scribecomplement}{\textbf{Bruzzone}}, \space%
+    % \enspace\textbullet\enspace
+    Mario \textcolor{scribecomplement}{\textbf{Rossi}}%
 }
 \renewcommand{\posterdatedisplay}{%
     \fontcaveat{
@@ -55,11 +57,17 @@
 % Short version for the footline
 \title[Short Poster Title]{Your Poster Title Goes Here}
 
+% Contact info shown on the right of the footline
+\postercontact{%
+  Federico \textcolor{scribecomplement}{\textbf{Bruzzone}} (f.bruzzone@unimi.it)\enspace\textbullet\enspace
+  Mario \textcolor{scribecomplement}{\textbf{Rossi}} (m.rossi@unimi.it)%
+}
+
 \begin{document}
 \begin{frame}[t]
-
 \vskip0.8cm
 
+\posterbodycenter
 \begin{columns}[T, totalwidth=\textwidth]
 
 \begin{column}{0.015\textwidth}\end{column}
@@ -134,6 +142,26 @@
     \footnotesize
     \bibliographystyle{unsrt}
     \bibliography{local}
+\end{block}
+
+\vskip0.8cm
+
+\begin{block}{Links}
+    \hypersetup{hidelinks}%
+    \begin{columns}[T, totalwidth=\linewidth]
+        \begin{column}{0.5\linewidth}
+            \centering
+            {\small\textbf{Paper}}\\[0.3em]
+            \qrcode[height=4.5cm]{https://example.com/paper}\\[0.3em]
+            {\footnotesize\url{https://example.com/paper}}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \centering
+            {\small\textbf{Blog Post}}\\[0.3em]
+            \qrcode[height=4.5cm]{https://example.com/blog}\\[0.3em]
+            {\footnotesize\url{https://example.com/blog}}
+        \end{column}
+    \end{columns}
 \end{block}
 
 \end{column}
